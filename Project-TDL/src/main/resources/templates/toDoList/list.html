@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>ToDoList</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container">
+    <div class="page-header">
+        <h1>To Do List</h1>
+    </div>
+    <br/>
+
+    <div id="mainHide">
+        <table class="table table-striped">
+            <thead>
+            <!--<form class="form-inline" method="post" action="/save">-->
+             <div>
+                <input id = "content" type="text" class="form-control center-block" placeholder="내용" style="width: 250px">
+                <button type="button" id="register" class="btn btn-default center-block">등록</button>
+                 <button type="button" id="deleteAll" class="btn btn-default pull-right" > 전체삭제 </button>
+             </div>
+                 <!--</form>-->
+            <tr>
+                <th class="col-md-1">#</th>
+                <th class="col-md-2">완료 여부</th>
+                <th class="col-md-5">내용</th>
+                <th class="col-md-2">생성 날짜</th>
+                <th class="col-md-2">완료 날짜</th>
+                <th class="col-md-2">삭제</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="toDoList : ${tdlList}">
+                <td th:text="${toDoList.idx}"></td>
+                <td th:text="${toDoList.status}"></td>
+                <td th:text="${toDoList.description}"></td>
+                <td th:text="${toDoList.createdDate} ? ${#temporals.format(toDoList.createdDate,'yyyy-MM-dd HH:mm')} : ${toDoList.createdDate}"></td>
+                <td th:text="${toDoList.completedDate} ? ${#temporals.format(toDoList.completedDate,'yyyy-MM-dd HH:mm')} : ${toDoList.completedDate}"></td>
+                <td><button type="button" id="delete" class="btn btn-default" th:value="${toDoList.idx}"> 삭제 </button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br/>
+</div>
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script>
+    $('#register').click(function () {
+        var jsonData = JSON.stringify({
+            content : $('#content').val()
+        });
+        $.ajax({
+            url: "http://localhost:8080/api/save",
+            type: "POST",
+            data: jsonData,
+            contentType: "application/json",
+            dataType: "json",
+            success: function () {
+                alert('등록 성공!');
+                location.href = '/toDoList/list';
+            },
+            error: function () {
+                alert('등록 실패!');
+            }
+        });
+    });
+</script>
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script>
+    $('#deleteAll').click(function () {
+        $.ajax({
+            url: "http://localhost:8080/api/save",
+            type: "DELETE",
+            contentType: "application/json",
+            success: function () {
+                alert('전체삭제 성공!');
+                location.href = '/toDoList/list';
+            },
+            error: function () {
+                alert('전체삭제 실패!');
+            }
+        });
+    });
+</script>
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script>
+    $('#delete').click(function () {
+        var delete_id = $(this).val();
+        console.log(delete_id);
+
+        $.ajax({
+            url: "http://localhost:8080/api/delete/" + delete_id,
+            type: "DELETE",
+            contentType: "application/json",
+            success: function () {
+                alert('삭제 성공!');
+                location.href = '/toDoList/list';
+            },
+            error: function () {
+                alert('삭제 실패!');
+            }
+        });
+    });
+</script>
+
+
+
+</body>
+
+
+
+
+</html>
