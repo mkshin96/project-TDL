@@ -1,7 +1,7 @@
-package com.kiseok;
+package com.mugon;
 
-import com.kiseok.domain.ToDoList;
-import com.kiseok.repository.ToDoListRepository;
+import com.mugon.domain.ToDoList;
+import com.mugon.repository.ToDoListRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

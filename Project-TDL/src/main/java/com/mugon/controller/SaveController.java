@@ -1,7 +1,7 @@
-package com.kiseok.controller;
+package com.mugon.controller;
 
-import com.kiseok.domain.ToDoList;
-import com.kiseok.repository.ToDoListRepository;
+import com.mugon.domain.ToDoList;
+import com.mugon.repository.ToDoListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

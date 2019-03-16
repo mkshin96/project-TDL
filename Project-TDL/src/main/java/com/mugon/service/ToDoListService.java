@@ -1,7 +1,7 @@
-package com.kiseok.service;
+package com.mugon.service;
 
-import com.kiseok.domain.ToDoList;
-import com.kiseok.repository.ToDoListRepository;
+import com.mugon.domain.ToDoList;
+import com.mugon.repository.ToDoListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

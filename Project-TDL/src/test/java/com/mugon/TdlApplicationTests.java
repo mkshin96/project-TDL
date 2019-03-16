@@ -1,4 +1,4 @@
-package com.kiseok;
+package com.mugon;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

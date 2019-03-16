@@ -1,4 +1,4 @@
-package com.kiseok.domain;
+package com.mugon.domain;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,6 +1,6 @@
-package com.kiseok.controller;
+package com.mugon.controller;
 
-import com.kiseok.repository.ToDoListRepository;
+import com.mugon.repository.ToDoListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +16,10 @@ public class DeleteController {
     @Autowired
     ToDoListRepository toDoListRepository;
 
-    @DeleteMapping("{idx}")
+    @DeleteMapping("/{idx}")
     public ResponseEntity<?> delete(@PathVariable("idx") Long idx){
 
-        System.out.println("들어옴");
-
         toDoListRepository.deleteById(idx);
-
 
         return new ResponseEntity<>("{}", HttpStatus.OK);
 
