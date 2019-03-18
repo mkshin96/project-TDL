@@ -18,3 +18,11 @@
 
 **day2 최종화면**
 ![day2](/images/day2.png)
+
+### day3
+
+- 수정 구현
+- css 일부 적용
+
+**day3 최종화면**
+![day3](/images/day3.png)
