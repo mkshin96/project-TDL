@@ -42,4 +42,9 @@ public class ToDoList implements Serializable {
     public void update(String modified) {
         this.description = modified;
     }
+
+    public void update2() {
+        this.status = true;
+        this.completedDate = LocalDateTime.now();
+    }
 }

@@ -1,0 +1,29 @@
+body{
+    background: black;
+    font-family: 'Rajdhani', sans-serif;
+    color: white;
+}
+
+td{
+    background-color: black;
+}
+
+.head2{
+    font-family: 'Rajdhani', sans-serif;
+}
+
+#content{
+    background-color: black;
+    color: white;
+}
+
+#register{
+    background-color: black;
+    color: white;
+}
+
+#deleteAll{
+    background-color: black;
+    color: white;
+}
+

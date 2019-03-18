@@ -1,13 +1,11 @@
 package com.mugon.controller;
 
+import com.mugon.domain.ToDoList;
 import com.mugon.repository.ToDoListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/delete")
@@ -23,6 +21,18 @@ public class DeleteController {
 
         return new ResponseEntity<>("{}", HttpStatus.OK);
 
+    }
+
+    @PutMapping("/{idx}")
+    public ResponseEntity<?> putTDL(@PathVariable("idx")Long idx){
+
+        ToDoList updateTDL = toDoListRepository.getOne(idx);
+
+        updateTDL.update2();
+
+        toDoListRepository.save(updateTDL);
+
+        return new ResponseEntity<>("{}", HttpStatus.OK);
     }
 
 

@@ -3,7 +3,11 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>ToDoList</title>
+    <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rajdhani" rel="stylesheet">
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/list.css"/>
+
 </head>
 <body>
 <div class="container">
@@ -16,9 +20,9 @@
         <table class="table table-striped">
             <thead>
             <!--<form class="form-inline" method="post" action="/save">-->
-             <div>
-                <input id = "content" type="text" class="form-control center-block" placeholder="내용" style="width: 250px">
-                <button type="button" id="register" class="btn btn-default center-block">등록</button>
+             <div class="head2">
+                 <input id = "content" type="text" class="form-control pull-left center-block" placeholder="add.." style="width: 300px;">
+                 <button type="button" id="register" class="btn btn-default" style="margin-left: -30px">등록 </button>
                  <button type="button" id="deleteAll" class="btn btn-default pull-right" > 전체삭제 </button>
              </div>
                  <!--</form>-->
@@ -28,6 +32,7 @@
                 <th class="col-md-4">내용</th>
                 <th class="col-md-2">생성 날짜</th>
                 <th class="col-md-2">완료 날짜</th>
+                <th class="col-md-2">완료 확인</th>
                 <th class="col-md-2">수정</th>
                 <th class="col-md-2">삭제</th>
             </tr>
@@ -39,8 +44,10 @@
                 <td th:text="${toDoList.description}"></td>
                 <td th:text="${toDoList.createdDate} ? ${#temporals.format(toDoList.createdDate,'yyyy-MM-dd HH:mm')} : ${toDoList.createdDate}"></td>
                 <td th:text="${toDoList.completedDate} ? ${#temporals.format(toDoList.completedDate,'yyyy-MM-dd HH:mm')} : ${toDoList.completedDate}"></td>
-                <td><button type="button" class="update btn btn-default"  th:value="${toDoList.idx}"> 수정 </button></td>
-                <td><button type="button" class="delete btn btn-default"  th:value="${toDoList.idx}"> 삭제 </button></td>
+                <td th:if="${toDoList.status}"><button type="button" class="complete btn btn-default" th:value="${toDoList.idx}" ><img src="/images/complete2.png" width="25px" height="25"></button></td>
+                <td th:if="!${toDoList.status}"><button type="button" class="complete btn btn-default"  th:value="${toDoList.idx}" ><img src="/images/complete.png" width="25px" height="25"></button></td>
+                <td><button type="button" class="update btn btn-default"  th:value="${toDoList.idx}"><img src="/images/update2.png" width="25px" height="25"></button></td>
+                <td><button type="button" class="delete btn btn-default"  th:value="${toDoList.idx}"><img src="/images/delete2.png" width="25px" height="25"></button></td>
             </tr>
             </tbody>
         </table>
@@ -99,7 +106,7 @@
             type: "DELETE",
             contentType: "application/json",
             success: function () {
-                alert('삭제 성공!');
+                // alert('삭제 성공!');
                 location.href = '/toDoList/list';
             },
             error: function () {
@@ -126,14 +133,32 @@
                 location.href = '/toDoList/list';
             },
             error: function () {
-                alert('수정 실패!');
+                // alert('수정 실패!');
             }
         });
     });
 
 </script>
 
+<script>
+    $('.complete').click(function () {
+        var complete_id = $(this).val();
 
+        $.ajax({
+            url: "http://localhost:8080/api/delete/" + complete_id,
+            type: "PUT",
+            contentType: "application/json",
+            dataType: "json",
+            success: function () {
+                location.href = '/toDoList/list';
+            },
+            error: function () {
+                alert('완료실패!');
+            }
+        });
+    });
+
+</script>
 
 
 </body>
