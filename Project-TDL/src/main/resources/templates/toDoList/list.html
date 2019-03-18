@@ -25,9 +25,10 @@
             <tr>
                 <th class="col-md-1">#</th>
                 <th class="col-md-2">완료 여부</th>
-                <th class="col-md-5">내용</th>
+                <th class="col-md-4">내용</th>
                 <th class="col-md-2">생성 날짜</th>
                 <th class="col-md-2">완료 날짜</th>
+                <th class="col-md-2">수정</th>
                 <th class="col-md-2">삭제</th>
             </tr>
             </thead>
@@ -38,6 +39,7 @@
                 <td th:text="${toDoList.description}"></td>
                 <td th:text="${toDoList.createdDate} ? ${#temporals.format(toDoList.createdDate,'yyyy-MM-dd HH:mm')} : ${toDoList.createdDate}"></td>
                 <td th:text="${toDoList.completedDate} ? ${#temporals.format(toDoList.completedDate,'yyyy-MM-dd HH:mm')} : ${toDoList.completedDate}"></td>
+                <td><button type="button" class="update btn btn-default"  th:value="${toDoList.idx}"> 수정 </button></td>
                 <td><button type="button" class="delete btn btn-default"  th:value="${toDoList.idx}"> 삭제 </button></td>
             </tr>
             </tbody>
@@ -106,6 +108,31 @@
         });
     });
 </script>
+
+<script>
+    $('.update').click(function () {
+        var modified = prompt("수정할 내용을 입력하세요.");
+        var update_id = $(this).val();
+
+
+        $.ajax({
+            url: "http://localhost:8080/api/save/" + update_id,
+            type: "PUT",
+            data: modified,
+            contentType: "application/json",
+            dataType: "json",
+            success: function () {
+                alert('수정 성공!');
+                location.href = '/toDoList/list';
+            },
+            error: function () {
+                alert('수정 실패!');
+            }
+        });
+    });
+
+</script>
+
 
 
 

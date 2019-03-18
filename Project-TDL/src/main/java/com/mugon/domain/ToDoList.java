@@ -3,6 +3,7 @@ package com.mugon.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -36,5 +37,9 @@ public class ToDoList implements Serializable {
         this.status = status;
         this.createdDate = createdDate;
         this.completedDate = completedDate;
+    }
+
+    public void update(String modified) {
+        this.description = modified;
     }
 }

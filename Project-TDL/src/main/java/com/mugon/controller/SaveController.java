@@ -36,5 +36,18 @@ public class SaveController {
         return new ResponseEntity<>("{}", HttpStatus.OK);
     }
 
+    @PutMapping("/{idx}")
+    public ResponseEntity<?> putTDL(@PathVariable("idx")Long idx, @RequestBody String modified){
+
+        ToDoList updateTDL = toDoListRepository.getOne(idx);
+
+        updateTDL.update(modified);
+
+        toDoListRepository.save(updateTDL);
+
+        return new ResponseEntity<>("{}", HttpStatus.OK);
+    }
+
+
 
 }
