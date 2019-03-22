@@ -1,7 +1,9 @@
 package com.mugon;
 
 import com.mugon.domain.ToDoList;
+import com.mugon.domain.User;
 import com.mugon.repository.ToDoListRepository;
+import com.mugon.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,15 +21,9 @@ public class TdlApplication {
         SpringApplication.run(TdlApplication.class, args);
     }
     @Bean
-    public CommandLineRunner runner(ToDoListRepository toDoListRepository) throws Exception    {
+    public CommandLineRunner runner(UserRepository userRepository, ToDoListRepository toDoListRepository) throws Exception    {
         return (args) -> {
-            IntStream.rangeClosed(1, 20).forEach(index ->
-                    toDoListRepository.save(ToDoList.builder()
-                            .status(false)
-                            .description("내용" + index)
-                            .createdDate(LocalDateTime.now())
-//                            .completedDate(LocalDateTime.now())
-                            .build()));
+            userRepository.save(User.builder().id("신무곤").password("1234").email("test@gmail.com").build());
         };
     }
 

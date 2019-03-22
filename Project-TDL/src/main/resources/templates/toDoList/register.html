@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+        <head>
+            <title>로그인</title>
+            <meta charset="utf-8">
+            <link rel="stylesheet" href="/css/style.css">
+            <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+        </head>
+<body>
+<div class="login-form">
+    <form onsubmit="return false">
+        <input type="text" class="id text-field" placeholder="id"><br>
+        <input type="password" class="password text-field" placeholder="password"><br>
+        <input type="text" class="email text-field" placeholder="email" ><br>
+        <button type="button" class="register btn btn-default">회원가입</button><br>
+    </form>
+    <div class="links">
+        <a href="http://localhost:8080/toDoList/login">뒤로가기</a>
+    </div>
+</div>
+</body>
+</html></title>
+</head>
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script>
+    $('.register').click(function () {
+        var idCheck = $('.id').val();
+
+        if($('.id').val().trim().length == 0){
+            alert("ID를 입력하세요.");
+            $('.id').focus();
+            return false;
+        }
+
+        if($('.password').val().trim().length == 0){
+            alert("PASSWORD를 입력하세요.");
+            $('.password').focus();
+            return false;
+        }
+
+        if($('.email').val().trim().length == 0){
+            alert("EMAIL를 입력하세요.");
+            $('.email').focus();
+            return false;
+        }
+
+        var jsonData = JSON.stringify({
+            id : $('.id').val(),
+            password : $('.password').val(),
+            email : $('.email').val()
+        });
+        $.ajax({
+            url: "http://localhost:8080/api",
+            type: "POST",
+            data: jsonData,
+            contentType: "application/json",
+            dataType: "json",
+            success: function () {
+                alert('등록 성공!');
+                location.href = '/toDoList/login';
+            },
+            error: function () {
+                alert('등록 실패!');
+            }
+        });
+    });
+</script>
+
+<!--<script>-->
+    <!---->
+<!--</script>    -->
+
+
+
+</html>

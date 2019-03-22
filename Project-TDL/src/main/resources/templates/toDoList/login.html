@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<head>
+    <title>로그인</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+</head>
+<body>
+<div class="login-form">
+    <form>
+        <input type="text"  class="id text-field" placeholder="아이디"><br>
+        <input type="password"  class="password text-field" placeholder="비밀번호"><br>
+        <button type="button" class="login btn btn-default">LOGIN</button>
+    </form>
+
+    <div class="links">
+        <a href="http://localhost:8080/toDoList/register">ID가 없나요?</a>
+    </div>
+</div>
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script>
+    $('.login').click(function () {
+        var jsonData = JSON.stringify({
+            id : $('.id').val(),
+            password : $('.password').val(),
+        });
+        $.ajax({
+            url: "http://localhost:8080/api/login",
+            type: "POST",
+            data: jsonData,
+            contentType: "application/json",
+            dataType: "json",
+            success: function () {
+                alert('로그인 성공!');
+                location.href = '/toDoList/list';
+            },
+            error: function () {
+                alert('아이디가 없거나, 비밀번호가 틀렸습니다.');
+            }
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

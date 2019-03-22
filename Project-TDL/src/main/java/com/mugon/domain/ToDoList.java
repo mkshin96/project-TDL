@@ -31,12 +31,16 @@ public class ToDoList implements Serializable {
     @Column
     private LocalDateTime completedDate;
 
+    @OneToOne
+    private User user;
+
     @Builder
-    public ToDoList(String description, Boolean status, LocalDateTime createdDate, LocalDateTime completedDate) {
+    public ToDoList(String description, Boolean status, LocalDateTime createdDate, LocalDateTime completedDate, User user) {
         this.description = description;
         this.status = status;
         this.createdDate = createdDate;
         this.completedDate = completedDate;
+        this.user = user;
     }
 
     public void update(String modified) {
@@ -46,5 +50,10 @@ public class ToDoList implements Serializable {
     public void update2() {
         this.status = true;
         this.completedDate = LocalDateTime.now();
+    }
+
+    public void update3() {
+        this.status = false;
+        this.completedDate = null;
     }
 }

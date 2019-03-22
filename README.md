@@ -22,7 +22,21 @@
 ### day3
 
 - 수정 구현
+- 완료여부 구현
 - css 일부 적용
 
 **day3 최종화면**
 ![day3](/images/day3.png)
+
+### day4
+
+- 회원가입 구현
+- 로그인 구현
+- TodoListcontroller로 합침(SaveController, DeleteController)
+- User 클래스 생성
+- UserController 생성
+- UserRepository 생성
+
+**day4 최종화면**
+![day4_login](/images/day4_login.png)
+![day4_register](/images/day4_register.png)
