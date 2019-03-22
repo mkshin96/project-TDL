@@ -20,11 +20,13 @@
         <table class="table table-striped" border="0" style="outline: 0">
             <thead>
             <!--<form class="form-inline" method="post" action="/save">-->
-             <div class="head2">
+             <a class="head2">
                  <input id = "content" type="text" class="form-control pull-left center-block" placeholder="add.." style="width: 300px;">
                  <button type="button" id="register" class="btn btn-default" style="margin-left: -30px">등록 </button>
                  <button type="button" id="deleteAll" class="btn btn-default pull-right" > 전체삭제 </button>
-             </div>
+                 <a href="/toDoList/logout"><button type="button" class="logout btn btn-default pull-right" > 로그아웃 </button></a>
+             </a>
+    </div>
                  <!--</form>-->
             <tr>
                 <th class="col-md-1">#</th>
@@ -163,7 +165,6 @@
     });
 
 </script>
-
 <!--<script>-->
     <!--function update() {-->
         <!--console.log("들어옴");-->

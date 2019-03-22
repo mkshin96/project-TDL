@@ -21,6 +21,7 @@
 <script th:src="@{/js/jquery.min.js}"></script>
 <script>
     $('.login').click(function () {
+
         var jsonData = JSON.stringify({
             id : $('.id').val(),
             password : $('.password').val(),
@@ -32,8 +33,23 @@
             contentType: "application/json",
             dataType: "json",
             success: function () {
-                alert('로그인 성공!');
+                $.ajax({
+                    url: "http://localhost:8080/toDoList/check",
+                    type: "POST",
+                    data: $('.id').val(),
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function () {
+                        alert('로그인 성공!');
+                        location.href = '/toDoList/list';
+                    },
+                    error: function () {
+                        alert('아이디가 없거나, 비밀번호가 틀렸습니다.');
+                    }
+                });
                 location.href = '/toDoList/list';
+
+
             },
             error: function () {
                 alert('아이디가 없거나, 비밀번호가 틀렸습니다.');

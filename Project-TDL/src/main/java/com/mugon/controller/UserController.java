@@ -26,9 +26,16 @@ public class UserController {
     @PostMapping
     public ResponseEntity<?> postUser(@RequestBody User user){
 
-        userRepository.save(user);
 
-        return new ResponseEntity<>("{}", HttpStatus.CREATED);
+        User overLapId = userRepository.findById(user.getId());
+
+        if(overLapId == null) {
+            userRepository.save(user);
+            return new ResponseEntity<>("{}", HttpStatus.CREATED);
+        }
+
+        else return null;
+
 
     }
 
@@ -51,16 +58,7 @@ public class UserController {
             else{
                 return null;
             }
-
         }
-
-
-//        if(id.equals(collectUser.getId())){
-//            if(password.equals(collectUser.getPassword())){
-//                return new ResponseEntity<>("{}", HttpStatus.OK);
-//            }
-//
-//        }
 
     }
 }

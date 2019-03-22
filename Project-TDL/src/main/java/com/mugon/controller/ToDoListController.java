@@ -38,11 +38,27 @@ public class ToDoListController {
 
     @GetMapping("/list")
     public String list(Model model) {
-        this.user = userRepository.getOne(1L);
-
-        model.addAttribute("tdlList", toDoListService.findTdlList());
-        return "/toDoList/list";
+        if(this.user == null) {
+            return "redirect:/toDoList/login";
+        }
+        else{
+            //findTdlList()
+            model.addAttribute("tdlList", toDoListService.findTdlListByUser(this.user));
+            return "/toDoList/list";
+        }
     }
+
+//    @GetMapping("/list2")
+//    public String list2(Model model) {
+//        if(this.user == null) {
+//            return "redirect:/toDoList/login";
+//        }
+//
+//        else{
+//            model.addAttribute("tdlList", toDoListService.findTdlListByUser(this.user));
+//            return "/toDoList/list";
+//        }
+//    }
 
     @GetMapping("/login")
     public String login() {
@@ -54,6 +70,21 @@ public class ToDoListController {
     public String register() {
 
         return "/toDoList/register";
+    }
+
+    @PostMapping("/check")
+    public ResponseEntity<?> checkID(@RequestBody String id){
+
+        this.user = userRepository.findById(id);
+
+        return new ResponseEntity<>("{}", HttpStatus.OK);
+    }
+
+    @GetMapping("/logout")
+    public String logoutID(){
+        this.user = null;
+
+        return "redirect:/toDoList/login";
     }
 
     @PostMapping
