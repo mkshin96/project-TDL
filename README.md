@@ -38,5 +38,9 @@
 - UserRepository 생성
 
 **day4 최종화면**
+
+**login**
 ![day4_login](/images/day4_login.png)
+
+**register**
 ![day4_register](/images/day4_register.png)
