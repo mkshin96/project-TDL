@@ -32,10 +32,13 @@
 
 - 회원가입 구현
 - 로그인 구현
-- TodoListcontroller로 합침(SaveController, DeleteController)
-- User 클래스 생성
+- TodoListController로 합침(SaveController, DeleteController)
+- User 생성
 - UserController 생성
 - UserRepository 생성
+- 중복 id 생성 방지
+- user가 자신의 tdlList를 보게 함
+- logout 기능 구현
 
 **day4 최종화면**
 
