@@ -18,6 +18,7 @@ public class ToDoListService {
         return toDoListRepository.findAllByOrderByIdx();
     }
 
+    //User가 자신의 tdlList만 보게하기 위한 기능 구현
     public List<ToDoList> findTdlListByUser(User user) {
         return toDoListRepository.findAllByUserOrderByIdx(user);
     }

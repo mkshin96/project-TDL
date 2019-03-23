@@ -23,9 +23,9 @@ public class UserController {
 
     private User user;
 
+    //회원가입 시 중복id 방지
     @PostMapping
     public ResponseEntity<?> postUser(@RequestBody User user){
-
 
         User overLapId = userRepository.findById(user.getId());
 
@@ -39,6 +39,7 @@ public class UserController {
 
     }
 
+    //login기능 구현
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody Map<String, String> user){
         String id = user.get("id");
@@ -46,15 +47,18 @@ public class UserController {
 
         User collectUser = userRepository.findById(id);
 
+        //id가 db에 없는 경우
         if(collectUser == null){
             return null;
         }
 
         else {
+            //id와 password가 db에 있는 값과 일치하는 경우
             if(password.equals(collectUser.getPassword())){
                 return new ResponseEntity<>("{}", HttpStatus.OK);
             }
 
+            //id가 db에 있지만 password가 틀린 경우
             else{
                 return null;
             }

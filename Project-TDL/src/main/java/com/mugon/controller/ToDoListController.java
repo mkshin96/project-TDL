@@ -35,30 +35,18 @@ public class ToDoListController {
         return "/toDoList/list";
     }
 
-
     @GetMapping("/list")
     public String list(Model model) {
+        //로그인되어있지 않을 경우 login화면으로 보냄
         if(this.user == null) {
             return "redirect:/toDoList/login";
         }
+        //로그인되어있을 경우 유저 자신의 화면으로 보냄
         else{
-            //findTdlList()
             model.addAttribute("tdlList", toDoListService.findTdlListByUser(this.user));
             return "/toDoList/list";
         }
     }
-
-//    @GetMapping("/list2")
-//    public String list2(Model model) {
-//        if(this.user == null) {
-//            return "redirect:/toDoList/login";
-//        }
-//
-//        else{
-//            model.addAttribute("tdlList", toDoListService.findTdlListByUser(this.user));
-//            return "/toDoList/list";
-//        }
-//    }
 
     @GetMapping("/login")
     public String login() {
@@ -72,6 +60,7 @@ public class ToDoListController {
         return "/toDoList/register";
     }
 
+    //로그인 완료시 유저의 id를 받아와 현재 user에 저장
     @PostMapping("/check")
     public ResponseEntity<?> checkID(@RequestBody String id){
 
@@ -80,6 +69,7 @@ public class ToDoListController {
         return new ResponseEntity<>("{}", HttpStatus.OK);
     }
 
+    //logout시 현재 user를 null로 만들고, login화면으로 보냄
     @GetMapping("/logout")
     public String logoutID(){
         this.user = null;
@@ -87,6 +77,7 @@ public class ToDoListController {
         return "redirect:/toDoList/login";
     }
 
+    //tdlList add
     @PostMapping
     public ResponseEntity<?> saveTDL(@RequestBody String content){
         int a = content.indexOf(":");
@@ -100,6 +91,7 @@ public class ToDoListController {
         return new ResponseEntity<>("{}", HttpStatus.CREATED);
     }
 
+    //tdlList update
     @PutMapping("/{idx}")
     public ResponseEntity<?> putTDL(@PathVariable("idx")Long idx, @RequestBody String modified){
 
@@ -112,6 +104,7 @@ public class ToDoListController {
         return new ResponseEntity<>("{}", HttpStatus.OK);
     }
 
+    //tdlList 완료여부 update
     @PutMapping("/status/{idx}")
     public ResponseEntity<?> putTDL(@PathVariable("idx")Long idx){
 
@@ -128,7 +121,7 @@ public class ToDoListController {
         return new ResponseEntity<>("{}", HttpStatus.OK);
     }
 
-
+    //tdlList 전체삭제
     @DeleteMapping("/deleteAll")
     public ResponseEntity<?> deleteTDL(){
 
@@ -137,6 +130,7 @@ public class ToDoListController {
         return new ResponseEntity<>("{}", HttpStatus.OK);
     }
 
+    //tdlList 개별삭제
     @DeleteMapping("/{idx}")
     public ResponseEntity<?> delete(@PathVariable("idx") Long idx){
 
