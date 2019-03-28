@@ -48,8 +48,9 @@ public class ToDoList implements Serializable {
     }
 
     public void update2(boolean status) {
+        System.out.println(status);
         this.status = !status;
-        this.completedDate = this.status ? null : LocalDateTime.now();
+        this.completedDate = status ? null : LocalDateTime.now();
     }
 
 }

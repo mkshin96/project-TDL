@@ -21,7 +21,7 @@
             <thead>
             <!--<form class="form-inline" method="post" action="/save">-->
              <a class="head2">
-                 <input id = "content" type="text" class="form-control pull-left center-block" placeholder="add.." style="width: 300px;">
+                 <input id = "description" type="text" class="form-control pull-left center-block" placeholder="add.." style="width: 300px;">
                  <button type="button" id="register" class="btn btn-default" style="margin-left: -30px">등록 </button>
                  <button type="button" id="deleteAll" class="btn btn-default pull-right" > 전체삭제 </button>
                  <a href="/toDoList/logout"><button type="button" class="logout btn btn-default pull-right" > 로그아웃 </button></a>
@@ -60,14 +60,14 @@
 <script th:src="@{/js/jquery.min.js}"></script>
 <script>
     $('#register').click(function () {
-        if($('#content').val().trim().length == 0){
+        if($('#description').val().trim().length == 0){
             alert("내용을 입력하세요.");
-            $('#content').focus();
+            $('#description').focus();
             return false;
         }
 
         var jsonData = JSON.stringify({
-            content : $('#content').val()
+            description : $('#description').val()
         });
 
         $.ajax({

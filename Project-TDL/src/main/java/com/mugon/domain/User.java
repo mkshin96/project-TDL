@@ -31,10 +31,10 @@ public class User implements Serializable {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<ToDoList> toDoLists = new ArrayList<>();
 
-//    public void add1(ToDoList toDoList){
-////        toDoList.setUser(this);
-//        getToDoLists().add(toDoList);
-//    }
+    public void add1(ToDoList toDoList){
+//        toDoList.setUser(this);
+        getToDoLists().add(toDoList);
+    }
 
     @Builder
     public User(String id, String password, String email, List<ToDoList> toDoLists) {

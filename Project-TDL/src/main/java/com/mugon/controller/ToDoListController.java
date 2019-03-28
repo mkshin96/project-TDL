@@ -94,8 +94,7 @@ public class ToDoListController {
         toDoListRepository.save(ToDoList.builder().status(false).description(toDoList.getDescription()).createdDate(LocalDateTime.now())
                 .user(this.user).build());
 
-        this.user.getToDoLists().add(toDoList);
-
+        this.user.add1(toDoList);
         System.out.println(user);
         return new ResponseEntity<>("{}", HttpStatus.CREATED);
     }
@@ -117,12 +116,9 @@ public class ToDoListController {
     @PutMapping("/status/{idx}")
     public ResponseEntity<?> putTDL(@PathVariable("idx")Long idx){
 
+        System.out.println("들어옴");
         ToDoList updateTDL = toDoListRepository.getOne(idx);
 
-//        System.out.println(updateTDL.getStatus());
-//        if(updateTDL.getStatus() == false) updateTDL.update2();
-//
-//        else updateTDL.update3();
         updateTDL.update2(updateTDL.getStatus());
 
         toDoListRepository.save(updateTDL);

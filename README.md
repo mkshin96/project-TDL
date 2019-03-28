@@ -43,8 +43,27 @@
 
 **day4 최종화면**
 
-**login**
+- **login**
 ![day4_login](/images/day4_login.png)
 
-**register**
+- **register**
 ![day4_register](/images/day4_register.png)
+
+### day5
+
+- User, ToDoList를 @OneToMany(mappedBy = "user"), @ManyToOne로 양방향 관계 설정
+- User의 add1 메소드로 User와 ToDoList 객체 간의 양방향 관계 설정
+
+**day5 최종화면**
+
+- **test1**
+![day5-test1](/images/day5-test1.png)
+
+- **test1 - console**
+![day5-test1Console](/images/day5-test1Console.png)
+
+- **test2**
+![day5-test1](/images/day5-test2.png)
+
+- **test2 - console**
+![day5-test1Console](/images/day5-test2Console.png)
