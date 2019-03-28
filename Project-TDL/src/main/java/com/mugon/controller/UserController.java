@@ -29,6 +29,8 @@ public class UserController {
 
         User overLapId = userRepository.findById(user.getId());
 
+        System.out.println("회원가입 user : " +  user);
+
         if(overLapId == null) {
             userRepository.save(user);
             return new ResponseEntity<>("{}", HttpStatus.CREATED);

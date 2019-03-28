@@ -23,7 +23,7 @@ public class TdlApplication {
     @Bean
     public CommandLineRunner runner(UserRepository userRepository, ToDoListRepository toDoListRepository) throws Exception    {
         return (args) -> {
-            userRepository.save(User.builder().id("신무곤").password("1234").email("test@gmail.com").build());
+            userRepository.save(User.builder().id("root").password("1234").email("test@gmail.com").build());
         };
     }
 

@@ -9,4 +9,7 @@ import java.util.List;
 public interface ToDoListRepository extends JpaRepository<ToDoList, Long> {
     List<ToDoList> findAllByOrderByIdx();
     List<ToDoList> findAllByUserOrderByIdx(User user);
+
+    ToDoList findByUser(User user);
+
 }

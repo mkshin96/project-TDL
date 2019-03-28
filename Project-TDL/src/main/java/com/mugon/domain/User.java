@@ -3,6 +3,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -26,10 +28,19 @@ public class User implements Serializable {
     @Column
     private String email;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    private List<ToDoList> toDoLists = new ArrayList<>();
+
+//    public void add1(ToDoList toDoList){
+////        toDoList.setUser(this);
+//        getToDoLists().add(toDoList);
+//    }
+
     @Builder
-    public User(String id, String password, String email) {
+    public User(String id, String password, String email, List<ToDoList> toDoLists) {
         this.id = id;
         this.password = password;
         this.email = email;
+        this.toDoLists = toDoLists;
     }
 }

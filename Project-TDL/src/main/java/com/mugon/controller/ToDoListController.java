@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 @RequestMapping("/toDoList")
@@ -29,8 +30,11 @@ public class ToDoListController {
 
     private User user;
 
+    private ToDoList toDoList;
+
     @GetMapping({"", "/"})
     public String board(@RequestParam(value = "idx", defaultValue = "0") Long idx, Model model) {
+//        model.addAttribute("userId", userRepository.findById(this.user.getId()));
         model.addAttribute("toDoList", toDoListService.findTdlByIdx(idx));
         return "/toDoList/list";
     }
@@ -40,6 +44,12 @@ public class ToDoListController {
         //로그인되어있지 않을 경우 login화면으로 보냄
         if(this.user == null) {
             return "redirect:/toDoList/login";
+        }
+
+        //root계정은 모든 게시물을 볼 수 있음
+        else if(this.user.getId().equals("root")){
+            model.addAttribute("tdlList", toDoListService.findTdlList());
+            return "/toDoList/list";
         }
         //로그인되어있을 경우 유저 자신의 화면으로 보냄
         else{
@@ -76,18 +86,17 @@ public class ToDoListController {
 
         return "redirect:/toDoList/login";
     }
-
+//
     //tdlList add
     @PostMapping
-    public ResponseEntity<?> saveTDL(@RequestBody String content){
-        int a = content.indexOf(":");
-        String realContent = content.substring(a+2, content.length()-2);
+    public ResponseEntity<?> saveTDL(@RequestBody ToDoList toDoList){
 
-//        User saveUser = userRepository.getOne(1L);
-
-        toDoListRepository.save(ToDoList.builder().status(false).description(realContent).createdDate(LocalDateTime.now())
+        toDoListRepository.save(ToDoList.builder().status(false).description(toDoList.getDescription()).createdDate(LocalDateTime.now())
                 .user(this.user).build());
 
+        this.user.getToDoLists().add(toDoList);
+
+        System.out.println(user);
         return new ResponseEntity<>("{}", HttpStatus.CREATED);
     }
 
@@ -108,13 +117,13 @@ public class ToDoListController {
     @PutMapping("/status/{idx}")
     public ResponseEntity<?> putTDL(@PathVariable("idx")Long idx){
 
-
         ToDoList updateTDL = toDoListRepository.getOne(idx);
 
-        System.out.println(updateTDL.getStatus());
-        if(updateTDL.getStatus() == false) updateTDL.update2();
-
-        else updateTDL.update3();
+//        System.out.println(updateTDL.getStatus());
+//        if(updateTDL.getStatus() == false) updateTDL.update2();
+//
+//        else updateTDL.update3();
+        updateTDL.update2(updateTDL.getStatus());
 
         toDoListRepository.save(updateTDL);
 

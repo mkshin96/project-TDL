@@ -1,18 +1,18 @@
 package com.mugon.domain;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
 @Entity
 @Table
+@Setter
 public class ToDoList implements Serializable {
 
     @Id
@@ -31,7 +31,7 @@ public class ToDoList implements Serializable {
     @Column
     private LocalDateTime completedDate;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
     @Builder
@@ -47,13 +47,9 @@ public class ToDoList implements Serializable {
         this.description = modified;
     }
 
-    public void update2() {
-        this.status = true;
-        this.completedDate = LocalDateTime.now();
+    public void update2(boolean status) {
+        this.status = !status;
+        this.completedDate = this.status ? null : LocalDateTime.now();
     }
 
-    public void update3() {
-        this.status = false;
-        this.completedDate = null;
-    }
 }

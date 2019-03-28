@@ -43,7 +43,7 @@
             <tr th:each="toDoList : ${tdlList}">
                 <td th:text="${toDoList.idx}"></td>
                 <td th:text="${toDoList.status}" th:value="${toDoList.idx}"></td>
-                <td th:text="${toDoList.description}"></td>
+                <td th:text="${toDoList.description}" contenteditable="true" class="updateContent" th:value="${toDoList.idx}"></td>
                 <td th:text="${toDoList.createdDate} ? ${#temporals.format(toDoList.createdDate,'yyyy-MM-dd HH:mm')} : ${toDoList.createdDate}"></td>
                 <td th:text="${toDoList.completedDate} ? ${#temporals.format(toDoList.completedDate,'yyyy-MM-dd HH:mm')} : ${toDoList.completedDate}"></td>
                 <td th:if="${toDoList.status}"><button type="button" class="complete btn btn-default" th:value="${toDoList.idx}" ><img src="/images/complete2.png" width="25px" height="25"></button></td>
@@ -60,9 +60,16 @@
 <script th:src="@{/js/jquery.min.js}"></script>
 <script>
     $('#register').click(function () {
+        if($('#content').val().trim().length == 0){
+            alert("내용을 입력하세요.");
+            $('#content').focus();
+            return false;
+        }
+
         var jsonData = JSON.stringify({
             content : $('#content').val()
         });
+
         $.ajax({
             url: "http://localhost:8080/toDoList",
             type: "POST",
@@ -120,13 +127,10 @@
 
 <script>
     $(document).on("click",".update",function(){
-        // console.log("들어옴");
-        var modified = prompt("수정할 내용을 입력하세요.");
-        // var dynamicInput = '<input type="text" class="updateContent">';
-        //
+
+        var modified = $(this).parent().parent().find('.updateContent').text();
 
         var update_id = $(this).val();
-
 
         $.ajax({
             url: "http://localhost:8080/toDoList/" + update_id,
@@ -165,17 +169,17 @@
     });
 
 </script>
-<!--<script>-->
-    <!--function update() {-->
-        <!--console.log("들어옴");-->
-        <!--console.log($(this).val());-->
-        <!--var dynamicInput = '<input type="text" class="updateContent">';-->
-        <!--$("content2").html(dynamicInput);-->
 
-        <!--var updateComplete = '<td th:text="${toDoList.description}"><button type="button" class="updateComplete btn btn-default" th:value="${toDoList.idx}"> </button></td>';-->
-    <!--}-->
-    <!---->
-<!--</script>-->
+<script>
+    function update() {
+        console.log("들어옴");
+        console.log($(this).val());
+        var dynamicInput = '<input type="text" class="updateContent">';
+
+        var updateComplete = '<td th:text="${toDoList.description}"><button type="button" class="updateComplete btn btn-default" th:value="${toDoList.idx}"> </button></td>';
+    }
+
+</script>
 
 
 </body>
