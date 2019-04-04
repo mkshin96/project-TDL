@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>로그인</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+
+
+</head>
+<body>
+<div class="login-form">
+    <form th:action="@{/login}" method="post">
+        <input type="text"  class="id text-field" placeholder="아이디" name="id"><br>
+        <input type="password"  class="password text-field" placeholder="비밀번호" name="password"><br>
+        <input type="submit" class="login" value="LOGIN">
+    </form>
+
+    <div class="links">
+        <a href="http://localhost:8080/register">ID가 없나요?</a>
+    </div>
+</div>
+
+<script th:src="@{/js/jquery.min.js}"></script>
+
+
+<!--<script>-->
+    <!--// var token = $("meta[name='_csrf']").attr("content");-->
+    <!--// var header = $("meta[name='_csrf_header']").attr("content"); $(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });-->
+    <!--//-->
+    <!--// $(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });-->
+
+    <!--$('.login').click(function () {-->
+
+        <!--var jsonData = JSON.stringify({-->
+            <!--id : $('.id').val(),-->
+            <!--password : $('.password').val(),-->
+        <!--});-->
+        <!--$.ajax({-->
+            <!--url: "http://localhost:8080/api",-->
+            <!--type: "POST",-->
+            <!--data: jsonData,-->
+            <!--contentType: "application/json",-->
+            <!--dataType: "json",-->
+            <!--success: function () {-->
+                <!--// $.ajax({-->
+                <!--//     url: "http://localhost:8080/toDoList/check",-->
+                <!--//     type: "POST",-->
+                <!--//     data: $('.id').val(),-->
+                <!--//     contentType: "application/json",-->
+                <!--//     dataType: "json",-->
+                <!--//     success: function () {-->
+                <!--//         alert('로그인 성공!');-->
+                <!--//         location.href = '/toDoList/list';-->
+                <!--//     },-->
+                <!--//     error: function () {-->
+                <!--//         alert('아이디가 없거나, 비밀번호가 틀렸습니다.');-->
+                <!--//     }-->
+                <!--// });-->
+                <!--// location.href = '/toDoList/list';-->
+                <!--alert('로그인 성공!');-->
+
+            <!--},-->
+            <!--error: function () {-->
+                <!--alert('아이디가 없거나, 비밀번호가 틀렸습니다.');-->
+            <!--}-->
+        <!--});-->
+    <!--});-->
+<!--</script>-->
+
+
+
+</body>
+</html>

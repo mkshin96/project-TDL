@@ -38,6 +38,17 @@ body {
     padding:10px;
 }
 
+.idCheck{
+    color:white;
+    width:260px;
+    border:none;
+    border-radius:5px;
+    background-color: #5bc0de;
+    font-size: 14px;
+    margin-bottom:30px;
+    padding:10px;
+}
+
 .login {
     color:white;
     width:260px;
@@ -48,6 +59,8 @@ body {
     margin-bottom:30px;
     padding:10px;
 }
+
+
 
 .links {
     text-decoration:None;

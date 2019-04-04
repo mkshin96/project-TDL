@@ -5,9 +5,12 @@ import com.mugon.domain.User;
 import com.mugon.repository.ToDoListRepository;
 import com.mugon.repository.UserRepository;
 import com.mugon.service.ToDoListService;
+import com.mugon.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +31,8 @@ public class ToDoListController {
     @Autowired
     ToDoListRepository toDoListRepository;
 
+
+
     private User user;
 
     private ToDoList toDoList;
@@ -42,60 +47,59 @@ public class ToDoListController {
     @GetMapping("/list")
     public String list(Model model) {
         //로그인되어있지 않을 경우 login화면으로 보냄
-        if(this.user == null) {
-            return "redirect:/toDoList/login";
-        }
-
+//        if(this.user == null) {
+//            return "redirect:/toDoList/login";
+//        }
         //root계정은 모든 게시물을 볼 수 있음
-        else if(this.user.getId().equals("root")){
-            model.addAttribute("tdlList", toDoListService.findTdlList());
-            return "/toDoList/list";
-        }
+//        else if(this.user.getId().equals("root")){
+//            System.out.println("list : " + this.user);
+//
+//            model.addAttribute("tdlList", toDoListService.findTdlList());
+//            return "/toDoList/list";
+//        }
         //로그인되어있을 경우 유저 자신의 화면으로 보냄
-        else{
-            model.addAttribute("tdlList", toDoListService.findTdlListByUser(this.user));
-            return "/toDoList/list";
-        }
+//        else{
+//            model.addAttribute("tdlList", toDoListService.findTdlListByUser(this.user));
+//            return "/toDoList/list";
+//        }
+
+
+        this.user = userRepository.findById(UserService.currentUserId());
+
+        model.addAttribute("tdlList", toDoListService.findTdlListByUser(this.user));
+        return "/toDoList/list";
     }
 
-    @GetMapping("/login")
-    public String login() {
 
-        return "/toDoList/login";
-    }
 
-    @GetMapping("/register")
-    public String register() {
 
-        return "/toDoList/register";
-    }
 
     //로그인 완료시 유저의 id를 받아와 현재 user에 저장
-    @PostMapping("/check")
-    public ResponseEntity<?> checkID(@RequestBody String id){
-
-        this.user = userRepository.findById(id);
-
-        return new ResponseEntity<>("{}", HttpStatus.OK);
-    }
+//    @PostMapping("/check")
+//    public ResponseEntity<?> checkID(@RequestBody String id){
+//
+//        this.user = userRepository.findById(id);
+//
+//        return new ResponseEntity<>("{}", HttpStatus.OK);
+//    }
 
     //logout시 현재 user를 null로 만들고, login화면으로 보냄
-    @GetMapping("/logout")
-    public String logoutID(){
-        this.user = null;
-
-        return "redirect:/toDoList/login";
-    }
+//    @GetMapping("/logout")
+//    public String logoutID(){
+//        this.user = null;
+//
+//        return "redirect:/toDoList/login";
+//    }
 //
     //tdlList add
     @PostMapping
-    public ResponseEntity<?> saveTDL(@RequestBody ToDoList toDoList){
+    public ResponseEntity<?> saveTDL(@RequestBody ToDoList toDoList,  User user){
 
         toDoListRepository.save(ToDoList.builder().status(false).description(toDoList.getDescription()).createdDate(LocalDateTime.now())
                 .user(this.user).build());
 
         this.user.add1(toDoList);
-        System.out.println(user);
+
         return new ResponseEntity<>("{}", HttpStatus.CREATED);
     }
 
@@ -116,7 +120,6 @@ public class ToDoListController {
     @PutMapping("/status/{idx}")
     public ResponseEntity<?> putTDL(@PathVariable("idx")Long idx){
 
-        System.out.println("들어옴");
         ToDoList updateTDL = toDoListRepository.getOne(idx);
 
         updateTDL.update2(updateTDL.getStatus());
@@ -139,8 +142,13 @@ public class ToDoListController {
     @DeleteMapping("/{idx}")
     public ResponseEntity<?> delete(@PathVariable("idx") Long idx){
 
+//        List<ToDoList> deleteToDo = toDoListRepository.findByIdx(idx);
+
         toDoListRepository.deleteById(idx);
 
+//        this.user.delete1(idx);
+
+        System.out.println(this.user);
         return new ResponseEntity<>("{}", HttpStatus.OK);
 
     }

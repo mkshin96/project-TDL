@@ -36,6 +36,15 @@ public class User implements Serializable {
         getToDoLists().add(toDoList);
     }
 
+
+    /*List<ToDoList> toDoLists의 idx값과 db의 idx값이 달라 오류 발생
+    public void delete1(Long idx) {
+        int i = Math.toIntExact(idx);
+        System.out.println(i-1);
+        getToDoLists().remove(i - 1);
+    }
+    */
+
     @Builder
     public User(String id, String password, String email, List<ToDoList> toDoLists) {
         this.id = id;
@@ -43,4 +52,5 @@ public class User implements Serializable {
         this.email = email;
         this.toDoLists = toDoLists;
     }
+
 }

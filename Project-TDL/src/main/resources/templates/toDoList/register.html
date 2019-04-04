@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>회원가입</title>
@@ -13,6 +13,7 @@
 <div class="login-form">
     <form onsubmit="return false">
         <input type="text" class="id text-field" placeholder="id"><br>
+        <button type="button" class="idCheck btn btn-default">ID CHECK</button><br>
         <input type="password" class="password text-field" placeholder="password"><br>
         <input type="text" class="email text-field" placeholder="email" ><br>
         <button type="button" class="register btn btn-default">회원가입</button><br>
@@ -26,9 +27,52 @@
 </head>
 
 <script th:src="@{/js/jquery.min.js}"></script>
+
+<!--<script th:src="@{/js/jquery.min.js}"></script>-->
+<script>
+    var pass = false;
+
+    $('.idCheck').click(function () {
+        var idCheck = $('.id').val();
+
+        if($('.id').val().trim().length == 0){
+            alert("ID를 입력하세요.");
+            $('.id').focus();
+            return false;
+        }
+
+        var jsonData = JSON.stringify({
+            id : $('.id').val()
+
+        });
+        $.ajax({
+            url: "http://localhost:8080/register/idCheck",
+            type: "POST",
+            data: jsonData,
+            contentType: "application/json",
+            dataType: "json",
+            success: function () {
+                alert('회원가입이 가능한 ID입니다.');
+                pass = true;
+                $('idCheck').backgroundColor = "#5bc0de";
+            },
+            error: function () {
+                alert('중복된 ID입니다.');
+                $('idCheck').backgroundColor = "#DE5E52";
+            }
+        });
+    });
+</script>
+
+
 <script>
     $('.register').click(function () {
         var idCheck = $('.id').val();
+
+        if(pass == false){
+            alert("ID 중복검사를 해주세요.");
+            return false;
+        }
 
         if($('.id').val().trim().length == 0){
             alert("ID를 입력하세요.");
@@ -54,17 +98,17 @@
             email : $('.email').val()
         });
         $.ajax({
-            url: "http://localhost:8080/api",
+            url: "http://localhost:8080/register",
             type: "POST",
             data: jsonData,
             contentType: "application/json",
             dataType: "json",
             success: function () {
                 alert('등록 성공!');
-                location.href = '/toDoList/login';
+                location.href = '/login';
             },
             error: function () {
-                alert('중복된 아이디입니다.');
+                alert('오잉');
             }
         });
     });

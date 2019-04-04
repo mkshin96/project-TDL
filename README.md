@@ -67,3 +67,12 @@
 
 - **test2 - console**
 ![day5-test1Console](/images/day5-test2Console.png)
+
+### day6
+
+- `spring security` 적용
+	- `login.html`에서 name = "id" 적용
+	- `UserDetailsService` 인터페이스의 `loadUserByUsername` 메소드 구현
+	- 현재 Session 사용자의 정보를 받아오는 `currentUserId` 구현
+	- [참조](http://chomman.github.io/blog/spring%20framework/spring-security%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-%EC%82%AC%EC%9A%A9%EC%9E%90%EC%9D%98-%EC%A0%95%EB%B3%B4%EB%A5%BC-%EC%B0%BE%EB%8A%94-%EB%B0%A9%EB%B2%95/)
+	- id 중복검사 적용, 중복검사를 하지않으면 `login`화면으로 가지 못하게함
