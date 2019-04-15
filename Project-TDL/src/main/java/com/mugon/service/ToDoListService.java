@@ -25,6 +25,8 @@ public class ToDoListService {
 
     //User가 자신의 tdlList만 보게하기 위한 기능 구현
     public List<ToDoList> findTdlListByUser(User user) {
+        System.out.println(user);
+
         return toDoListRepository.findAllByUserOrderByIdx(user);
     }
 

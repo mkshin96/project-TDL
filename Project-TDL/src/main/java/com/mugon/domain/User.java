@@ -11,7 +11,7 @@ import java.util.List;
 @Table
 @Entity
 @Setter
-@ToString
+
 public class User implements Serializable {
 
     @Id
@@ -32,7 +32,6 @@ public class User implements Serializable {
     private List<ToDoList> toDoLists = new ArrayList<>();
 
     public void add1(ToDoList toDoList){
-//        toDoList.setUser(this);
         getToDoLists().add(toDoList);
     }
 

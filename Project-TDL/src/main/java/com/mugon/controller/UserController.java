@@ -22,7 +22,7 @@ public class UserController {
         return "/login";
     }
 
-    @GetMapping("/loginSuccess")
+    @PostMapping("/loginSuccess")
     public String loginSuccess() {
         System.out.println("로그인 진입");
         return "redirect:/toDoList/list";

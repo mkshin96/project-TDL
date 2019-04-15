@@ -19,13 +19,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/login", "/register", "/register/idCheck","/js/**", "/css/**", "/images/**", "/fonts/**").permitAll()
+                .antMatchers("/login", "/register", "/register/idCheck", "/register/checkEmail","/js/**", "/css/**", "/images/**", "/fonts/**", "/reply", "/reply/idCheck").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .usernameParameter("id")
                 .loginPage("/login")
-                .defaultSuccessUrl("/loginSuccess")
+                .successForwardUrl("/loginSuccess")
                 .permitAll()
                 .and()
                 .logout()
@@ -34,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
 
         http.csrf().disable();
+
     }
 
     @Bean

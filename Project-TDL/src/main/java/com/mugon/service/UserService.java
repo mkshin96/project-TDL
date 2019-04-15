@@ -1,6 +1,7 @@
 package com.mugon.service;
 
 import com.mugon.domain.User;
+import com.mugon.dto.UserDTO;
 import com.mugon.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -30,10 +31,10 @@ public class UserService implements UserDetailsService {
     private PasswordEncoder passwordEncoder;
 
 
-    public void saveUser(User postUser){
-            postUser.setPassword(passwordEncoder.encode(postUser.getPassword()));
+    public void saveUser(UserDTO postUserDTO){
+            postUserDTO.setPassword(passwordEncoder.encode(postUserDTO.getPassword()));
 
-            userRepository.save(postUser);
+            userRepository.save(postUserDTO.saveUser());
     }
 
     @Override

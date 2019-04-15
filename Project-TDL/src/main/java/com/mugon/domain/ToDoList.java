@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -34,6 +35,9 @@ public class ToDoList implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "toDoList")
+    private List<Reply> replys = new ArrayList<>();
+
     @Builder
     public ToDoList(String description, Boolean status, LocalDateTime createdDate, LocalDateTime completedDate, User user) {
         this.description = description;
@@ -53,4 +57,15 @@ public class ToDoList implements Serializable {
         this.completedDate = status ? null : LocalDateTime.now();
     }
 
+    public void add(Reply reply) {
+        System.out.println("add 진입!");
+        getReplys().add(reply);
+        System.out.println("List<Reply> : " + getReplys());
+
+//        System.out.println(getReplys().get(0).getIdx());
+//        System.out.println(getReplys().get(1));
+//        System.out.println(getReplys().get(2));
+//        System.out.println(getReplys().get(3));
+
+    }
 }

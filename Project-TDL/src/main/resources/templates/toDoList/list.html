@@ -34,13 +34,14 @@
                 <th class="col-md-4">내용</th>
                 <th class="col-md-2">생성 날짜</th>
                 <th class="col-md-2">완료 날짜</th>
-                <th class="col-md-2">완료 확인</th>
+                <th class="col-md-4">완료 확인</th>
                 <th class="col-md-2">수정</th>
                 <th class="col-md-2">삭제</th>
+                <th class="col-md-2">댓글</th>
             </tr>
             </thead>
-            <tbody>
-            <tr th:each="toDoList : ${tdlList}">
+            <tbody th:each="toDoList : ${tdlList}">
+            <tr>
                 <td th:text="${toDoList.idx}"></td>
                 <td th:text="${toDoList.status}" th:value="${toDoList.idx}"></td>
                 <td th:text="${toDoList.description}" contenteditable="true" class="updateContent" th:value="${toDoList.idx}"></td>
@@ -50,7 +51,36 @@
                 <td th:if="!${toDoList.status}"><button type="button" class="complete btn btn-default"  th:value="${toDoList.idx}" ><img src="/images/complete.png" width="25px" height="25"></button></td>
                 <td><button type="button" class="update btn btn-default"  th:value="${toDoList.idx}"><img src="/images/update2.png" width="25px" height="25"></button></td>
                 <td><button type="button" class="delete btn btn-default"  th:value="${toDoList.idx}"><img src="/images/delete2.png" width="25px" height="25"></button></td>
+                <td><button type="button" class="reply btn btn-default"  th:value="${toDoList.idx}"><img src="/images/plus.png" width="25px" height="25"></button></td>
+
+
+                <tr class = "reply2">
+                    <td><input class= "replyContent" type="text" placeholder="add.." style="width: 300px;" th:value="${toDoList.idx}"></td>
+                    <td><button type="button" class="replyRegister" style="margin-left: -30px" th:value="${toDoList.idx}">등록 </button></td>
+                </tr>
+
+                <tr class = "reply2">
+                    <td>#</td>
+                    <td>내용</td>
+                    <td>생성 날짜</td>
+                    <td>수정 날짜</td>
+                </tr>
+
+                <tr class = "reply2" th:each="toDoReply : ${toDoList.replys}">
+
+                    <td th:text="${toDoReply.idx}"></td>
+                    <td th:text="${toDoReply.content}"></td>
+                    <td th:text="${toDoReply.createdDate} ? ${#temporals.format(toDoReply.createdDate,'yyyy-MM-dd HH:mm')} : ${toDoReply.createdDate}"></td>
+                    <td th:text="${toDoReply.modifiedDate} ? ${#temporals.format(toDoReply.modifiedDate,'yyyy-MM-dd HH:mm')} : ${toDoReply.modifiedDate}"></td>
+                    <!--<td th:text="${toDoList.replys.content}" th:value="${toDoList.replys.idx}" ></td>-->
+                    <!--<td th:text="${toDoList.replys.createdDate} ? ${#temporals.format(toDoList.replys.createdDate,'yyyy-MM-dd HH:mm')} : ${toDoList.replys.createdDate}"></td>-->
+                    <!--<td th:text="${toDoList.replys.modifiedDate} ? ${#temporals.format(toDoList.replys.modifiedDate,'yyyy-MM-dd HH:mm')} : ${toDoList.replys.modifiedDate}"></td>-->
+                </tr>
             </tr>
+
+
+
+
             </tbody>
         </table>
     </div>
@@ -59,6 +89,8 @@
 
 <script th:src="@{/js/jquery.min.js}"></script>
 <script>
+    $('.reply2').hide();
+
     $('#register').click(function () {
         if($('#description').val().trim().length == 0){
             alert("내용을 입력하세요.");
@@ -178,6 +210,85 @@
 
         var updateComplete = '<td th:text="${toDoList.description}"><button type="button" class="updateComplete btn btn-default" th:value="${toDoList.idx}"> </button></td>';
     }
+
+</script>
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script>
+
+
+    $('.reply').click(function () {
+        var reply_id = $(this).val();
+        var reply_parent_id = $(this).parent().parent().parent().find('.reply2');
+        reply_parent_id.fadeToggle();
+
+        // var reply_parent_id2 = $(this).parent().parent().parent().find('.replyContent2');
+
+        var jsonData = JSON.stringify({
+            idx : reply_id
+        });
+
+        $.ajax({
+            url: "http://localhost:8080/toDoList/checkIdx",
+            type: "POST",
+            data: jsonData,
+            contentType: "application/json",
+            dataType: "json",
+            success: function () {
+                // $.ajax({
+                //     url: "http://localhost:8080/toDoList/list2" ,
+                //     type: "GET",
+                //     // data: modified,
+                //     // contentType: "application/json",
+                //     // dataType: "json",
+                //     success: function () {
+                //         // alert('수정 성공!');
+                //         // location.href = '/toDoList/list';
+                //     },
+                //     error: function () {
+                //         // alert('수정 실패!');
+                //     }
+                // });
+            },
+            error: function () {
+                alert('실패!');
+            }
+        });
+    })
+
+</script>
+
+<script>
+    $('.replyRegister').click(function () {
+        var reply_id2 = $(this).val();
+
+        var reply_id3 = reply_id2 - 1;
+
+        var reply_text = $('.reply2 input').eq(reply_id3).val();
+
+        console.log(reply_id2);
+        var jsonData = JSON.stringify({
+
+            content : reply_text
+        });
+
+        console.log(jsonData);
+        $.ajax({
+            url: "http://localhost:8080/toDoList/postReply",
+            type: "POST",
+            data: jsonData,
+            contentType: "application/json",
+            dataType: "json",
+            success: function () {
+                alert('등록 성공!');
+                location.href = '/toDoList/list';
+            },
+            error: function () {
+                alert('등록 실패!');
+            }
+        });
+    })
+
 
 </script>
 

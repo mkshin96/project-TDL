@@ -11,12 +11,15 @@
         </head>
 <body>
 <div class="login-form">
-    <form onsubmit="return false">
-        <input type="text" class="id text-field" placeholder="id"><br>
-        <button type="button" class="idCheck btn btn-default">ID CHECK</button><br>
-        <input type="password" class="password text-field" placeholder="password"><br>
-        <input type="text" class="email text-field" placeholder="email" ><br>
-        <button type="button" class="register btn btn-default">회원가입</button><br>
+    <form onsubmit="return false;">
+        <input type="text" class="id text-field" placeholder="4자 이상의 id" maxlength="12"><br>
+        <span class="idErrorMessage"></span>
+        <!--<button type="button" class="idCheck btn btn-default" name="idCheckButton" >ID CHECK</button><br>-->
+        <input type="password" class="password text-field" placeholder="4자 이상의 password"><br>
+        <span class="passwordErrorMessage"></span>
+        <input type="email" class="email text-field" placeholder="email(example@example.com)" ><br>
+        <span class="emailErrorMessage"></span>
+        <input type="submit" class="register" value="회원가입"></input><br>
     </form>
     <div class="links">
         <a href="http://localhost:8080/toDoList/login">뒤로가기</a>
@@ -29,40 +32,65 @@
 <script th:src="@{/js/jquery.min.js}"></script>
 
 <!--<script th:src="@{/js/jquery.min.js}"></script>-->
-<script>
-    var pass = false;
+<!--<script>-->
 
-    $('.idCheck').click(function () {
-        var idCheck = $('.id').val();
 
-        if($('.id').val().trim().length == 0){
-            alert("ID를 입력하세요.");
-            $('.id').focus();
-            return false;
-        }
+    <!--$('.idCheck').click(function () {-->
+        <!--var object = this;-->
 
-        var jsonData = JSON.stringify({
-            id : $('.id').val()
+        <!--var idCheck = $('.id').val();-->
+        <!--// var colorChange = document.getElementsByName("idCheckButton");-->
+        <!--if($('.id').val().trim().length == 0){-->
+            <!--alert("ID를 입력하세요.");-->
+            <!--$('.id').focus();-->
+            <!--return false;-->
+        <!--}-->
 
-        });
-        $.ajax({
-            url: "http://localhost:8080/register/idCheck",
-            type: "POST",
-            data: jsonData,
-            contentType: "application/json",
-            dataType: "json",
-            success: function () {
-                alert('회원가입이 가능한 ID입니다.');
-                pass = true;
-                $('idCheck').backgroundColor = "#5bc0de";
-            },
-            error: function () {
-                alert('중복된 ID입니다.');
-                $('idCheck').backgroundColor = "#DE5E52";
-            }
-        });
-    });
-</script>
+        <!--var jsonData = JSON.stringify({-->
+            <!--id : $('.id').val()-->
+
+        <!--});-->
+
+        <!--$.ajax({-->
+            <!--url: "http://localhost:8080/register/idCheck",-->
+            <!--type: "POST",-->
+            <!--data: jsonData,-->
+            <!--contentType: "application/json",-->
+            <!--dataType: "json",-->
+            <!--success: function () {-->
+                <!--changeSuccess(object);-->
+            <!--},-->
+            <!--error:function () {-->
+                <!--changeError(object);-->
+            <!--}-->
+
+        <!--});-->
+
+        <!--function changeError(obj) {-->
+            <!--if(pass == false) {-->
+                <!--alert('중복된 ID입니다.');-->
+                <!--obj.style.backgroundColor = "#DE5E52";-->
+            <!--}-->
+        <!--}-->
+
+        <!--function changeSuccess(obj) {-->
+            <!--if(idPass == true){-->
+                <!--pass = true;-->
+                <!--alert('회원가입 할 수 있는 ID입니다.');-->
+                <!--obj.style.backgroundColor = "#5bc0de";-->
+            <!--}-->
+
+            <!--else{-->
+                <!--alert("ID를 확인해주세요.");-->
+                <!--return false;-->
+            <!--}-->
+
+
+        <!--}-->
+
+
+    <!--});-->
+<!--</script>-->
 
 
 <script>
@@ -70,9 +98,28 @@
         var idCheck = $('.id').val();
 
         if(pass == false){
-            alert("ID 중복검사를 해주세요.");
+            alert("ID를 확인해주세요.");
+            $('.id').focus();
             return false;
         }
+
+        if(idPass == false){
+            alert("ID를 확인해주세요.");
+            $('.id').focus();
+            return false;
+        }
+
+        if(passwordPass == false){
+            alert("PASSWORD를 확인해주세요.");
+            $('.password').focus();
+            return false;
+        }
+        if(emailPass == false){
+            alert("EMAIL을 확인해주세요.");
+            $('.email').focus();
+            return false;
+        }
+
 
         if($('.id').val().trim().length == 0){
             alert("ID를 입력하세요.");
@@ -114,10 +161,139 @@
     });
 </script>
 
-<!--<script>-->
-    <!---->
-<!--</script>    -->
 
+
+<script>
+    var pass = false;
+    var idPass = true;
+    var passwordPass = true;
+    var emailPass = true;
+    $('.id').blur(function () {
+        var object = this;
+        var jsonData = JSON.stringify({
+            id : $('.id').val()
+        });
+
+        if($('.id').val().trim().length == 0){
+            $('.idErrorMessage').html("<p style='color: #DE5E52; font-size: 12px; margin-top: -3px'>필수항목입니다.</p>").show();
+            idPass = false;
+        }
+
+        else if($('.id').val().trim().length <= 3 && $('.id').val().trim().length > 0){
+            $('.idErrorMessage').html("<p style='color: #DE5E52; font-size: 12px; margin-top: -3px'>ID는 4~12자여야합니다.").show();
+            idPass = false;
+        }
+
+        else {
+            $('.idErrorMessage').html("").hide();
+            idPass = true;
+        }
+
+        $.ajax({
+            url: "http://localhost:8080/register/idCheck",
+            type: "POST",
+            data: jsonData ,
+            contentType: "application/json",
+            dataType: "json",
+            success: function () {
+                pass = true;
+
+            },
+            error:function () {
+                pass = false;
+                $('.idErrorMessage').html("<p style='color: #DE5E52; font-size: 12px; margin-top: -3px'>중복된ID입니다.</p>").show();
+            }
+
+        });
+
+    })
+
+    $('.password').blur(function () {
+        if($('.password').val().trim().length == 0){
+            $('.passwordErrorMessage').html("<p style='color: #DE5E52; font-size: 12px; margin-top: -3px'>필수항목입니다.</p>").show();
+            passwordPass = false;
+        }
+
+        else if($('.password').val().trim().length <= 3 && $('.password').val().trim().length > 0){
+            $('.passwordErrorMessage').html("<p style='color: #DE5E52; font-size: 12px; margin-top: -3px'>PASSWORD는 4자 이상이어야 합니다.").show();
+            passwordPass = false;
+        }
+
+        else {
+            $('.passwordErrorMessage').html("").hide();
+            passwordPass = true;
+        }
+
+    })
+
+    $('.email').blur(function () {
+        var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
+
+        var emailData = JSON.stringify({
+            email : $('.email').val()
+        });
+
+        if($('.email').val().trim().length == 0){
+            $('.emailErrorMessage').html("<p style='color: #DE5E52; font-size: 12px; margin-top: -3px'>필수항목입니다.</p>").show();
+
+            emailPass = false;
+        }
+
+        else if(!getMail.test($('.email').val())){
+            $('.emailErrorMessage').html("<p style='color: #DE5E52; font-size: 12px; margin-top: -3px'>이메일 형식이 맞지 않습니다.</p>").show();
+
+            emailPass = false;
+        }
+
+        else {
+            $('.emailErrorMessage').html("").hide();
+
+            emailPass = true;
+        }
+
+        $.ajax({
+            url: "http://localhost:8080/register/checkEmail",
+            type: "POST",
+            data: emailData,
+            contentType: "application/json",
+            dataType: "json",
+            success: function () {
+                emailPass = true;
+            },
+            error:function () {
+                emailPass = false;
+                $('.emailErrorMessage').html("<p style='color: #DE5E52; font-size: 12px; margin-top: -3px'>중복된 email 입니다.</p>").show();
+
+            }
+
+        });
+
+    })
+
+
+    function changeError(obj) {
+        if(pass == false) {
+            alert('중복된 ID입니다.');
+            obj.style.backgroundColor = "#DE5E52";
+        }
+    }
+
+    function changeSuccess(obj) {
+        if(idPass == true){
+            pass = true;
+            alert('회원가입 할 수 있는 ID입니다.');
+            obj.style.backgroundColor = "#5bc0de";
+        }
+
+        else{
+            alert("ID를 확인해주세요.");
+            return false;
+        }
+
+
+    }
+
+</script>
 
 
 </html>
