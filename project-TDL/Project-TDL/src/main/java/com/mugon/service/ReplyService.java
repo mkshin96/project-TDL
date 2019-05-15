@@ -32,7 +32,4 @@ public class ReplyService {
         return toDoListRepository.findToDoListByIdx(idx);
     }
 
-//    public void saveReply(ReplyDTO replyDTO){
-//        replyRepository.save(replyDTO.saveReply());
-//    }
 }

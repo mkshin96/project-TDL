@@ -5,6 +5,8 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -12,7 +14,7 @@ import java.time.LocalDateTime;
 @Table
 @ToString
 @Setter
-public class Reply implements Serializable {
+public class Reply implements Serializable, Comparable<Reply> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,4 +44,18 @@ public class Reply implements Serializable {
         this.content = modified;
         this.modifiedDate = LocalDateTime.now();
     }
+
+    @Override
+    public int compareTo(Reply o) {
+        if(this.idx > o.idx){
+            return 1;
+        }
+        else if(this.idx < o.idx){
+            return -1;
+        }
+        else{
+            return 0;
+        }
+    }
+
 }

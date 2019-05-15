@@ -1,12 +1,13 @@
 package com.mugon.domain;
 
 import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Getter
@@ -33,10 +34,13 @@ public class ToDoList implements Serializable {
     @Column
     private LocalDateTime completedDate;
 
+    private static long count = 1;
+
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "toDoList")
+    @OrderBy("idx ASC")
     private List<Reply> replys = new ArrayList<>();
 
     @Builder
@@ -60,13 +64,9 @@ public class ToDoList implements Serializable {
 
     public void add(Reply reply) {
         System.out.println("add 진입!");
+
         getReplys().add(reply);
         System.out.println("List<Reply> : " + getReplys());
-
-//        System.out.println(getReplys().get(0).getIdx());
-//        System.out.println(getReplys().get(1));
-//        System.out.println(getReplys().get(2));
-//        System.out.println(getReplys().get(3));
-
     }
+
 }

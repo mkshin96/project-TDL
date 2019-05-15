@@ -10,8 +10,6 @@ console.log(nullCheck);
 // }
 
 
-
-
 $('#register').click(function () {
     if($('#description').val().trim().length == 0){
         alert("내용을 입력하세요.");
@@ -67,7 +65,6 @@ $('.replyDelete').click(function () {
         type: "DELETE",
         contentType: "application/json",
         success: function () {
-            // alert('삭제 성공!');
             location.href = '/toDoList/list';
         },
         error: function () {
@@ -90,7 +87,6 @@ $(document).on("click",".update",function(){
         dataType: "json",
         success: function () {
             alert('수정 성공!');
-            // location.href = '/toDoList/list';
             location.reload();
         },
         error: function () {
@@ -114,10 +110,8 @@ $(document).on("click",".replyUpdate",function(){
         success: function () {
             alert('수정 성공!');
             location.reload();
-            // location.href = '/toDoList/list';
         },
         error: function () {
-            // alert('수정 실패!');
         }
     });
 });
@@ -132,7 +126,6 @@ $('.complete').click(function () {
         dataType: "json",
         success: function () {
             location.reload();
-            // location.href = '/toDoList/list';
         },
         error: function () {
             alert('완료실패!');
@@ -220,12 +213,24 @@ $('.replyRegister').click(function () {
             deleteButton.setAttribute("type", "button");
             deleteButton.className="replyDelete2 btn-btn-default";
             deleteButton.setAttribute("id", "please2")
-            deleteButton.setAttribute("value", replyCount);
+            deleteButton.setAttribute("value", data.idx);
             deleteButton.onclick = function (ev) {
                 var deVal = $(this).val();
                 console.log(deVal);
 
                 $('.deleteContent' + deVal).remove();
+
+                $.ajax({
+                    url: "http://localhost:8080/reply/" + deVal,
+                    type: "DELETE",
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function () {
+                        alert('삭제 성공!');
+                    },
+                    error: function () {
+                    }
+                });
             }
 
             var deleteI = document.createElement("img");
@@ -300,7 +305,6 @@ $('#deleteAll').click(function () {
         contentType: "application/json",
         success: function () {
             alert('전체삭제 성공!');
-            // location.href = '/toDoList/list';
 
             location.reload();
         },

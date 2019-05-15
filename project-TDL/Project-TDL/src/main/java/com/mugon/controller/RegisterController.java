@@ -63,21 +63,14 @@ public class RegisterController {
     public ResponseEntity<?> postUser(@Valid @RequestBody UserDTO userDTO, BindingResult bindingResult){
         System.out.println("회원가입 진입");
 
-//        User registerUser = userRepository.findById(user.getId());
+        if(bindingResult.hasErrors()){
+            System.out.println(bindingResult.getAllErrors());
+            return new ResponseEntity<>("{}", HttpStatus.BAD_REQUEST);
+        }
+        else {
+            userService.saveUser(userDTO);
+            return new ResponseEntity<>("{}", HttpStatus.CREATED);
+        }
 
-//        if(registerUser == null) {
-            if(bindingResult.hasErrors()){
-                System.out.println(bindingResult.getAllErrors());
-                return new ResponseEntity<>("{}", HttpStatus.BAD_REQUEST);
-            }
-            else {
-                userService.saveUser(userDTO);
-                return new ResponseEntity<>("{}", HttpStatus.CREATED);
-            }
-            //        }
-
-//        else{
-//            return new ResponseEntity<>("{}", HttpStatus.BAD_REQUEST);
-//        }
     }
 }

@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -52,8 +53,6 @@ public class ToDoListController {
 
     @GetMapping({"/{idx}"})
     public String board(@RequestParam(defaultValue = "0", value = "idx")Long idx, Model model) {
-//        model.addAttribute("userId", userRepository.findById(this.user.getId()));
-
 
         model.addAttribute("tdlList", toDoListRepository.findByIdx(idx));
 
@@ -73,22 +72,17 @@ public class ToDoListController {
     @GetMapping("/list")
     public String list(Model model) {
         this.user = userRepository.findById(UserService.currentUserId());
-
-        System.out.println("list : " + this.toDoList);
         model.addAttribute("tdlList", toDoListService.findTdlListByUser(this.user));
-//        model.addAttribute("reply", replyService.findReplyByToDoList(this.toDoList));
         return "/toDoList/list";
     }
 
     @PostMapping("/postReply")
     public ResponseEntity<?> postReply(@RequestBody Reply reply){
-        System.out.println("댓글 등록 컨트롤러 진입");
+        this.toDoList.add(reply);
+
         replyRepository.save(Reply.builder().content(reply.getContent()).createdDate(LocalDateTime.now()).
                 toDoList(this.toDoList).build());
 
-        this.toDoList.add(reply);
-
-        System.out.println("댓글 등록 리스트: "+ reply);
         ReplyDTO replyDTO = new ReplyDTO();
 
         return new ResponseEntity<>(replyDTO.getReply(reply), HttpStatus.CREATED);
