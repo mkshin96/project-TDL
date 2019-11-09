@@ -4,6 +4,7 @@ import com.mugon.domain.Reply;
 import com.mugon.domain.ToDoList;
 import com.mugon.domain.User;
 import com.mugon.dto.ReplyDTO;
+import com.mugon.dto.ToDoListDto;
 import com.mugon.repository.ReplyRepository;
 import com.mugon.repository.ToDoListRepository;
 import com.mugon.repository.UserRepository;
@@ -72,7 +73,7 @@ public class ToDoListController {
 
     @PostMapping("/postReply")
     public ResponseEntity<?> postReply(@RequestBody Reply reply){
-        this.toDoList.add(reply);
+        this.toDoList.addReply(reply);
 
         replyRepository.save(Reply.builder().content(reply.getContent()).createdDate(LocalDateTime.now()).
                 toDoList(this.toDoList).build());
@@ -84,53 +85,33 @@ public class ToDoListController {
 
     //tdlList add
     @PostMapping
-    public ResponseEntity<?> saveTDL(@RequestBody ToDoList toDoList){
-        this.user.add1(toDoList);
-
-        toDoListRepository.save(ToDoList.builder().status(false).description(toDoList.getDescription()).createdDate(LocalDateTime.now())
-                .user(this.user).build());
-
-        return new ResponseEntity<>("{}", HttpStatus.CREATED);
+    public ResponseEntity<?> saveTDL(@RequestBody ToDoListDto toDoListDto){
+        return this.toDoListService.saveTdl(toDoListDto, this.user);
     }
 
     //tdlList update
     @PutMapping("/{idx}")
-    public ResponseEntity<?> putTDL(@PathVariable("idx")Long idx, @RequestBody String modified){
+    public ResponseEntity<?> putTDL(@PathVariable("idx")Long idx, @RequestBody ToDoListDto toDoListDto){
+        return this.toDoListService.updateTDL(idx, toDoListDto);
 
-        ToDoList updateTDL = toDoListRepository.getOne(idx);
-        updateTDL.update(modified);
-        toDoListRepository.save(updateTDL);
-
-        return new ResponseEntity<>("{}", HttpStatus.OK);
     }
 
     //tdlList 완료여부 update
     @PutMapping("/status/{idx}")
     public ResponseEntity<?> putTDL(@PathVariable("idx")Long idx){
-
-        ToDoList updateTDL = toDoListRepository.getOne(idx);
-        updateTDL.update2(updateTDL.getStatus());
-        toDoListRepository.save(updateTDL);
-
-        return new ResponseEntity<>("{}", HttpStatus.OK);
+        return toDoListService.updateTdlStatus(idx);
     }
 
     //tdlList 전체삭제
     @DeleteMapping("/deleteAll")
     public ResponseEntity<?> deleteTDL(){
-
-        toDoListRepository.deleteAll();
-
-        return new ResponseEntity<>("{}", HttpStatus.OK);
+        return toDoListService.deleteAllTdl();
     }
 
     //tdlList 개별삭제
     @DeleteMapping("/{idx}")
     public ResponseEntity<?> delete(@PathVariable("idx") Long idx){
-        toDoListRepository.deleteById(idx);
-
-        return new ResponseEntity<>("{}", HttpStatus.OK);
-
+        return toDoListService.deleteTdl(idx);
     }
 
 }

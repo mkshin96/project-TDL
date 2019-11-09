@@ -19,3 +19,8 @@ spring:
   jackson:
     deserialization:
       fail-on-unknown-properties : true
+
+app-properties:
+  username: testId
+  password: testPassword
+  email : testtest@gmail.com

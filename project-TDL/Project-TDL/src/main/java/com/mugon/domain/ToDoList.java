@@ -1,5 +1,6 @@
 package com.mugon.domain;
 
+import com.mugon.commons.Description;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,6 +24,7 @@ public class ToDoList implements Serializable {
     private String description;
 
     @Column
+    @Description("true = 미완료, false = 완료")
     private Boolean status;
 
     @Column
@@ -44,17 +46,24 @@ public class ToDoList implements Serializable {
         this.description = modified;
     }
 
-    public void update2(boolean status) {
-        System.out.println(status);
+    public void updateStatus(boolean status) {
+        System.out.println("=============");
+        System.out.println("this.status : " + this.status);
+        System.out.println("stats : " + !status);
+        System.out.println("=============");
         this.status = !status;
         this.completedDate = status ? null : LocalDateTime.now();
     }
 
-    public void add(Reply reply) {
-        System.out.println("add 진입!");
-
+    public void addReply(Reply reply) {
         getReplys().add(reply);
         System.out.println("List<Reply> : " + getReplys());
     }
 
+    public void addUser(User user) {
+        if (this.getUser() != null) {
+            this.getUser().getToDoLists().remove(this);
+        }
+        this.setUser(user);
+    }
 }

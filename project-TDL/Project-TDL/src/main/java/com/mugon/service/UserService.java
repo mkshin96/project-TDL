@@ -32,9 +32,8 @@ public class UserService implements UserDetailsService {
 
 
     public void saveUser(UserDTO postUserDTO){
-            postUserDTO.setPassword(passwordEncoder.encode(postUserDTO.getPassword()));
-
-            userRepository.save(postUserDTO.saveUser());
+        postUserDTO.setPassword(passwordEncoder.encode(postUserDTO.getPassword()));
+        userRepository.save(postUserDTO.saveUser());
     }
 
     @Override
@@ -50,9 +49,8 @@ public class UserService implements UserDetailsService {
     }
 
     public static String currentUserId(){
-
-        org.springframework.security.core.userdetails.User user= (org.springframework.security.core.userdetails.User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
+        org.springframework.security.core.userdetails.User user =
+                (org.springframework.security.core.userdetails.User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return user.getUsername();
     }
 }

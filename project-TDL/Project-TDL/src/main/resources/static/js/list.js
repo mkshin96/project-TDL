@@ -30,7 +30,6 @@ $('#register').click(function () {
         success: function () {
             alert('등록 성공!');
             location.reload();
-            // location.href = '/toDoList/list';
         },
         error: function () {
             alert('등록 실패!');
@@ -74,7 +73,6 @@ $('.replyDelete').click(function () {
 });
 
 $(document).on("click",".update",function(){
-
     var modified = $(this).parent().parent().find('.updateContent').text();
 
     var update_id = $(this).val();
@@ -90,7 +88,7 @@ $(document).on("click",".update",function(){
             location.reload();
         },
         error: function () {
-            // alert('수정 실패!');
+            alert('수정 실패!');
         }
     });
 });

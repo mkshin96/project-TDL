@@ -1,5 +1,7 @@
 package com.mugon.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mugon.config.AppProperties;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -16,4 +18,10 @@ public class BaseControllerTests {
 
     @Autowired
     MockMvc mockMvc;
+
+    @Autowired
+    ObjectMapper objectMapper;
+
+    @Autowired
+    AppProperties appProperties;
 }

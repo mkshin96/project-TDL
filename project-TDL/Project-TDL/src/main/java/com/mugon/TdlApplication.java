@@ -4,6 +4,7 @@ import com.mugon.domain.ToDoList;
 import com.mugon.domain.User;
 import com.mugon.repository.ToDoListRepository;
 import com.mugon.repository.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -32,6 +33,11 @@ public class TdlApplication {
         return (args) -> {
             userRepository.save(User.builder().id("test").password(passwordEncoder.encode("test")).email("test@gmail.com").build());
         };
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 
 
