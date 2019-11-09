@@ -24,17 +24,20 @@ public class ReplyController {
     private User user;
     private ToDoList toDoList;
 
-    @Autowired
-    private ReplyService replyService;
+    private final ReplyService replyService;
 
-    @Autowired
-    private ReplyRepository replyRepository;
+    private final ReplyRepository replyRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private ToDoListRepository toDoListRepository;
+    private final ToDoListRepository toDoListRepository;
+
+    public ReplyController(ReplyService replyService, ReplyRepository replyRepository, UserRepository userRepository, ToDoListRepository toDoListRepository) {
+        this.replyService = replyService;
+        this.replyRepository = replyRepository;
+        this.userRepository = userRepository;
+        this.toDoListRepository = toDoListRepository;
+    }
 
     @GetMapping("/reply")
     public String reply(Model model){
@@ -62,7 +65,6 @@ public class ReplyController {
         replyRepository.deleteById(idx);
 
         return new ResponseEntity<>("{}", HttpStatus.OK);
-
     }
 
 }

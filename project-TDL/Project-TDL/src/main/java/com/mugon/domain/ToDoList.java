@@ -10,12 +10,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-@Getter
-@NoArgsConstructor
+@Getter @Setter @EqualsAndHashCode(of = "idx")
+@Builder @NoArgsConstructor @AllArgsConstructor
 @Entity
-@Table
-@Setter
-
 public class ToDoList implements Serializable {
 
     @Id
@@ -42,15 +39,6 @@ public class ToDoList implements Serializable {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "toDoList")
     @OrderBy("idx ASC")
     private List<Reply> replys = new ArrayList<>();
-
-    @Builder
-    public ToDoList(String description, Boolean status, LocalDateTime createdDate, LocalDateTime completedDate, User user) {
-        this.description = description;
-        this.status = status;
-        this.createdDate = createdDate;
-        this.completedDate = completedDate;
-        this.user = user;
-    }
 
     public void update(String modified) {
         this.description = modified;

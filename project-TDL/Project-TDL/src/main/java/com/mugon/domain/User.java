@@ -1,16 +1,15 @@
 package com.mugon.domain;
 import lombok.*;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@NoArgsConstructor
-@Table
+@Getter @Setter @EqualsAndHashCode(of = "idx")
+@Builder @NoArgsConstructor @AllArgsConstructor
 @Entity
-@Setter
 public class User implements Serializable {
 
     @Id
@@ -32,14 +31,6 @@ public class User implements Serializable {
 
     public void add1(ToDoList toDoList){
         getToDoLists().add(toDoList);
-    }
-
-    @Builder
-    public User(String id, String password, String email, List<ToDoList> toDoLists) {
-        this.id = id;
-        this.password = password;
-        this.email = email;
-        this.toDoLists = toDoLists;
     }
 
 }

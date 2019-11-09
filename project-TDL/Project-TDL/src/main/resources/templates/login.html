@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="/css/style.css">
     <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
 
-
 </head>
 <body>
 <div class="login-form">
@@ -24,71 +23,7 @@
 </div>
 
 <script th:src="@{/js/jquery.min.js}"></script>
-
-<script>
-    $('.id').blur(function () {
-        if($('.id').val().trim().length == 0){
-            $('.idErrorMessage').html("<p style='color: #DE5E52; font-size: 12px; margin-top: -3px'>필수항목입니다.</p>").show()
-            return false;
-        }
-    })
-
-    $('.password').blur(function () {
-        if($('.password').val().trim().length == 0){
-            $('.passwordErrorMessage').html("<p style='color: #DE5E52; font-size: 12px; margin-top: -3px'>필수항목입니다.</p>").show();
-            return false;
-        }
-    })
-
-
-</script>
-
-
-<!--<script>-->
-    <!--// var token = $("meta[name='_csrf']").attr("content");-->
-    <!--// var header = $("meta[name='_csrf_header']").attr("content"); $(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });-->
-    <!--//-->
-    <!--// $(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });-->
-
-    <!--$('.login').click(function () {-->
-
-        <!--var jsonData = JSON.stringify({-->
-            <!--id : $('.id').val(),-->
-            <!--password : $('.password').val(),-->
-        <!--});-->
-        <!--$.ajax({-->
-            <!--url: "http://localhost:8080/api",-->
-            <!--type: "POST",-->
-            <!--data: jsonData,-->
-            <!--contentType: "application/json",-->
-            <!--dataType: "json",-->
-            <!--success: function () {-->
-                <!--// $.ajax({-->
-                <!--//     url: "http://localhost:8080/toDoList/check",-->
-                <!--//     type: "POST",-->
-                <!--//     data: $('.id').val(),-->
-                <!--//     contentType: "application/json",-->
-                <!--//     dataType: "json",-->
-                <!--//     success: function () {-->
-                <!--//         alert('로그인 성공!');-->
-                <!--//         location.href = '/toDoList/list';-->
-                <!--//     },-->
-                <!--//     error: function () {-->
-                <!--//         alert('아이디가 없거나, 비밀번호가 틀렸습니다.');-->
-                <!--//     }-->
-                <!--// });-->
-                <!--// location.href = '/toDoList/list';-->
-                <!--alert('로그인 성공!');-->
-
-            <!--},-->
-            <!--error: function () {-->
-                <!--alert('아이디가 없거나, 비밀번호가 틀렸습니다.');-->
-            <!--}-->
-        <!--});-->
-    <!--});-->
-<!--</script>-->
-
-
+<script th:src="@{/js/login.js}"></script>
 
 </body>
 </html>

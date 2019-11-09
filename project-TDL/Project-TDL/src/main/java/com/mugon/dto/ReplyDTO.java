@@ -7,8 +7,7 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Getter @Setter
 public class ReplyDTO {
 
     private String content;

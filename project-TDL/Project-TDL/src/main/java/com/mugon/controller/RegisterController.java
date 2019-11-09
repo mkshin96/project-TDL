@@ -4,6 +4,7 @@ import com.mugon.domain.User;
 import com.mugon.dto.UserDTO;
 import com.mugon.repository.UserRepository;
 import com.mugon.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/register")
+@Slf4j
 public class RegisterController {
 
     @Autowired
@@ -31,8 +33,6 @@ public class RegisterController {
 
     @PostMapping("/idCheck")
     public ResponseEntity<?> idCheck(@RequestBody User user){
-        System.out.println("ID 중복검사 진입");
-
         User registerUser = userRepository.findById(user.getId());
 
         if(registerUser == null) {
@@ -61,7 +61,7 @@ public class RegisterController {
 
     @PostMapping
     public ResponseEntity<?> postUser(@Valid @RequestBody UserDTO userDTO, BindingResult bindingResult){
-        System.out.println("회원가입 진입");
+        log.info("회원가입 진입");
 
         if(bindingResult.hasErrors()){
             System.out.println(bindingResult.getAllErrors());

@@ -8,12 +8,9 @@ import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 
-@Getter
-@NoArgsConstructor
+@Getter @Setter @ToString @EqualsAndHashCode(of = "idx")
+@Builder @NoArgsConstructor @AllArgsConstructor
 @Entity
-@Table
-@ToString
-@Setter
 public class Reply implements Serializable, Comparable<Reply> {
 
     @Id
@@ -31,14 +28,6 @@ public class Reply implements Serializable, Comparable<Reply> {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private ToDoList toDoList;
-
-    @Builder
-    public Reply(String content, LocalDateTime createdDate, LocalDateTime modifiedDate, ToDoList toDoList) {
-        this.content = content;
-        this.createdDate = createdDate;
-        this.modifiedDate = modifiedDate;
-        this.toDoList = toDoList;
-    }
 
     public void update(String modified) {
         this.content = modified;

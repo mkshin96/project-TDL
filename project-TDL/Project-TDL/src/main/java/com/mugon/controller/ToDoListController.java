@@ -10,6 +10,7 @@ import com.mugon.repository.UserRepository;
 import com.mugon.service.ReplyService;
 import com.mugon.service.ToDoListService;
 import com.mugon.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +28,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/toDoList")
+@Slf4j
 public class ToDoListController {
 
     @Autowired
@@ -51,17 +53,9 @@ public class ToDoListController {
 
     private ToDoList toDoList;
 
-    @GetMapping({"/{idx}"})
-    public String board(@RequestParam(defaultValue = "0", value = "idx")Long idx, Model model) {
-
-        model.addAttribute("tdlList", toDoListRepository.findByIdx(idx));
-
-        return "/toDoList/form";
-    }
-
     @PostMapping("/checkIdx")
     public ResponseEntity<?> checkIdx(@RequestBody ToDoList toDoList, Model model){
-        System.out.println("버튼 누를 때 :" + toDoList);
+        log.info("버튼 누를 때 :" + toDoList);
 
         this.toDoList = replyService.checkTodo(toDoList.getIdx());
 
@@ -91,7 +85,6 @@ public class ToDoListController {
     //tdlList add
     @PostMapping
     public ResponseEntity<?> saveTDL(@RequestBody ToDoList toDoList){
-
         this.user.add1(toDoList);
 
         toDoListRepository.save(ToDoList.builder().status(false).description(toDoList.getDescription()).createdDate(LocalDateTime.now())
@@ -99,8 +92,6 @@ public class ToDoListController {
 
         return new ResponseEntity<>("{}", HttpStatus.CREATED);
     }
-
-
 
     //tdlList update
     @PutMapping("/{idx}")

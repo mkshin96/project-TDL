@@ -33,7 +33,8 @@
             <body>
                 <div th:each="toDoList : ${tdlList}" class="textBox"  id = "textBox2">
                     <dl>
-                        <dt th:text="${toDoList.status} " th:value="${toDoList.idx}"></dt>
+                        <dt th:if="${toDoList.status}" th:text="완료" th:value="${toDoList.idx}"></dt>
+                        <dt th:if="!${toDoList.status}" th:text="미완료" th:value="${toDoList.idx}"></dt>
                         <br>
                         <dt th:text="${toDoList.description} " th:value="${toDoList.idx}" contenteditable="true" class="updateContent"></dt>
                         <br>
@@ -72,10 +73,6 @@
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/list.js}"></script>
 
-
 </body>
-
-
-
 
 </html>
