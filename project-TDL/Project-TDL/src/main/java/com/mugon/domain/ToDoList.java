@@ -1,5 +1,7 @@
 package com.mugon.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.mugon.commons.Description;
 import lombok.*;
 
@@ -14,6 +16,7 @@ import java.util.List;
 @Getter @Setter @EqualsAndHashCode(of = "idx")
 @Builder @NoArgsConstructor @AllArgsConstructor
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idx")
 public class ToDoList implements Serializable {
 
     @Id
@@ -33,8 +36,6 @@ public class ToDoList implements Serializable {
     @Column
     private LocalDateTime completedDate;
 
-    private static long count = 1;
-
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
@@ -42,28 +43,16 @@ public class ToDoList implements Serializable {
     @OrderBy("idx ASC")
     private List<Reply> replys = new ArrayList<>();
 
-    public void update(String modified) {
-        this.description = modified;
-    }
-
     public void updateStatus(boolean status) {
-        System.out.println("=============");
-        System.out.println("this.status : " + this.status);
-        System.out.println("stats : " + !status);
-        System.out.println("=============");
         this.status = !status;
         this.completedDate = status ? null : LocalDateTime.now();
     }
 
-    public void addReply(Reply reply) {
-        getReplys().add(reply);
-        System.out.println("List<Reply> : " + getReplys());
-    }
-
     public void addUser(User user) {
-        if (this.getUser() != null) {
-            this.getUser().getToDoLists().remove(this);
+        if (this.user != null) {
+            this.user.getToDoLists().remove(this);
         }
-        this.setUser(user);
+        this.user = user;
+        this.user.getToDoLists().add(this);
     }
 }

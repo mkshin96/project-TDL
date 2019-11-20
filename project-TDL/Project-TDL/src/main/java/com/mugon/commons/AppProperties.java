@@ -1,4 +1,4 @@
-package com.mugon.config;
+package com.mugon.commons;
 
 import lombok.Getter;
 import lombok.Setter;

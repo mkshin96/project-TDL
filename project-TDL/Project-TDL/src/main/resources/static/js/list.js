@@ -4,21 +4,17 @@ var divCount = 0;
 var nullCheck = localStorage.getItem('divCount');
 
 console.log(nullCheck);
-// if(nullCheck == NaN){
-//     divCount = 0;
-//     localStorage.setItem('divCount', divCount);
-// }
-
 
 $('#register').click(function () {
-    if($('#description').val().trim().length == 0){
+    var description = '#description';
+    if($(description).val().trim().length === 0){
         alert("내용을 입력하세요.");
         $('#description').focus();
         return false;
     }
 
     var jsonData = JSON.stringify({
-        description : $('#description').val()
+        description : $(description).val()
     });
 
     $.ajax({
@@ -46,7 +42,6 @@ $('.delete').click(function () {
         type: "DELETE",
         contentType: "application/json",
         success: function () {
-            // alert('삭제 성공!');
             location.href = '/toDoList/list';
         },
         error: function () {
@@ -73,14 +68,15 @@ $('.replyDelete').click(function () {
 });
 
 $(document).on("click",".update",function(){
-    var modified = $(this).parent().parent().find('.updateContent').text();
-
+    var jsonData = JSON.stringify({
+        description : $(this).parent().parent().find('.updateContent').text()
+    });
     var update_id = $(this).val();
-
+    console.log("update_id : " + update_id);
     $.ajax({
         url: "http://localhost:8080/toDoList/" + update_id,
         type: "PUT",
-        data: modified,
+        data: jsonData,
         contentType: "application/json",
         dataType: "json",
         success: function () {
@@ -95,14 +91,15 @@ $(document).on("click",".update",function(){
 
 $(document).on("click",".replyUpdate",function(){
 
-    var modified = $(this).parent().parent().find('.replyContent').text();
-
+    var jsonData = JSON.stringify({
+        content : $(this).parent().parent().find('.replyContent').text()
+    });
     var update_id = $(this).val();
 
     $.ajax({
         url: "http://localhost:8080/reply/" + update_id,
         type: "PUT",
-        data: modified,
+        data: jsonData,
         contentType: "application/json",
         dataType: "json",
         success: function () {
@@ -133,7 +130,7 @@ $('.complete').click(function () {
 
 
 $('.replyButton').click(function () {
-    console.log("reply버튼 누름")
+    console.log("reply버튼 누름");
     var reply_id = $(this).val();
     var reply_parent_id = $(this).parent().parent().parent().find('.reply');
     var reply_parent_id2 = $(this).parent().parent().parent().find('.please3');
@@ -145,7 +142,7 @@ $('.replyButton').click(function () {
     });
 
     $.ajax({
-        url: "http://localhost:8080/toDoList/checkIdx",
+        url: "http://localhost:8080/reply/checkIdx",
         type: "POST",
         data: jsonData,
         contentType: "application/json",
@@ -156,7 +153,7 @@ $('.replyButton').click(function () {
             alert('실패!');
         }
     });
-})
+});
 
 
 $('.replyRegister').click(function () {
@@ -171,12 +168,11 @@ $('.replyRegister').click(function () {
 
     console.log(reply_id2);
     var jsonData = JSON.stringify({
-
         content : reply_text
     });
 
     $.ajax({
-        url: "http://localhost:8080/toDoList/postReply",
+        url: "http://localhost:8080/reply",
         type: "POST",
         data: jsonData,
         contentType: "application/json",
@@ -229,7 +225,7 @@ $('.replyRegister').click(function () {
                     error: function () {
                     }
                 });
-            }
+            };
 
             var deleteI = document.createElement("img");
             deleteI.setAttribute("src", "/images/delete2.png");
@@ -265,7 +261,7 @@ $('.replyRegister').click(function () {
                         // alert('수정 실패!');
                     }
                 });
-            }
+            };
 
             var updatel = document.createElement("img");
             updatel.setAttribute("src", "/images/update2.png");
@@ -284,13 +280,11 @@ $('.replyRegister').click(function () {
             node.appendChild(node5);
 
             node.appendChild(node4);
-            var please = document.getElementById("textBox2");
             var please2 = document.getElementsByClassName("textBox");
             please2.item(reply_id2-1).appendChild(node);
 
         },
         error: function () {
-            // alert('등록 실패!');
         }
     });
 })

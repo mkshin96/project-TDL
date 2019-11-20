@@ -39,7 +39,6 @@ public class ToDoListService {
 
     public ResponseEntity saveTdl(ToDoListDto toDoListDto, User user) {
         ToDoList createdTodo = modelMapper.map(toDoListDto, ToDoList.class);
-        user.add1(createdTodo);
         createdTodo.addUser(user);
         setTdlDefaultValue(createdTodo);
         toDoListRepository.save(createdTodo);

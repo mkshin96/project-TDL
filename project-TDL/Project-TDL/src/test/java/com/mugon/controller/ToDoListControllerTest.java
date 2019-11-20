@@ -2,14 +2,12 @@ package com.mugon.controller;
 
 import com.mugon.commons.TestDescription;
 import com.mugon.domain.ToDoList;
-import com.mugon.domain.User;
 import com.mugon.dto.ToDoListDto;
 import com.mugon.dto.UserDTO;
 import com.mugon.repository.ToDoListRepository;
 import com.mugon.repository.UserRepository;
 import com.mugon.service.ToDoListService;
 import com.mugon.service.UserService;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.modelmapper.ModelMapper;
@@ -19,16 +17,15 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 public class ToDoListControllerTest extends BaseControllerTests{

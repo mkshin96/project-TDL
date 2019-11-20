@@ -26,13 +26,8 @@ public class Reply implements Serializable, Comparable<Reply> {
     @Column
     private LocalDateTime modifiedDate;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private ToDoList toDoList;
-
-    public void update(String modified) {
-        this.content = modified;
-        this.modifiedDate = LocalDateTime.now();
-    }
 
     @Override
     public int compareTo(Reply o) {
@@ -46,5 +41,17 @@ public class Reply implements Serializable, Comparable<Reply> {
             return 0;
         }
     }
+    public void update(String modified) {
+        this.content = modified;
+        this.modifiedDate = LocalDateTime.now();
+    }
 
+    public void addTodo(ToDoList toDoList) {
+        if (this.toDoList != null) {
+            this.toDoList.getReplys().remove(this);
+        }
+
+        this.toDoList = toDoList;
+        this.toDoList.getReplys().add(this);
+    }
 }

@@ -1,11 +1,14 @@
 package com.mugon.domain;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter @Setter @EqualsAndHashCode(of = "idx")
 @Builder @NoArgsConstructor @AllArgsConstructor
@@ -21,6 +24,7 @@ public class User implements Serializable {
     private String id;
 
     @Column
+    @JsonIgnore
     private String password;
 
     @Column
@@ -28,9 +32,5 @@ public class User implements Serializable {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<ToDoList> toDoLists = new ArrayList<>();
-
-    public void add1(ToDoList toDoList){
-        getToDoLists().add(toDoList);
-    }
 
 }

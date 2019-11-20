@@ -11,11 +11,4 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
 
     List<Reply> findAllByToDoListOrderByIdx(ToDoList toDoList);
 
-//    List<Reply> findRepliesByToDoListBeforeOrderByIdx(ToDoList toDoList);
-
-    @Query("select r from Reply r where r.toDoList = ?1 order by r.idx")
-    List<Reply> findRepliesByToDoListOrderByIdx(ToDoList toDoList);
-
-    Reply findReplyByToDoListIdx(Long idx);
-
 }
