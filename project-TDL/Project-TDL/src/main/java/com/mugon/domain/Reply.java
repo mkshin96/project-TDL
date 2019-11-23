@@ -52,6 +52,6 @@ public class Reply implements Serializable, Comparable<Reply> {
         }
 
         this.toDoList = toDoList;
-        this.toDoList.getReplys().add(this);
+        toDoList.getReplys().add(this);
     }
 }

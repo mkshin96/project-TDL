@@ -41,7 +41,7 @@ public class ReplyService {
 
     public ResponseEntity<?> postReply(ReplyDto replyDto, Errors errors) {
         if (errors.hasErrors()) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(errors);
         }
 
         Reply reply = modelMapper.map(replyDto, Reply.class);
@@ -52,7 +52,11 @@ public class ReplyService {
         return new ResponseEntity<>(savedReply, HttpStatus.CREATED);
     }
 
-    public ResponseEntity<?> putReply(Long idx, String modified) {
+    public ResponseEntity<?> putReply(Long idx, String modified, Errors errors) {
+        if (errors.hasErrors()) {
+            return ResponseEntity.badRequest().body(errors);
+        }
+
         Optional<Reply> replyById = replyRepository.findById(idx);
         if (!replyById.isPresent()) {
             return ResponseEntity.notFound().build();

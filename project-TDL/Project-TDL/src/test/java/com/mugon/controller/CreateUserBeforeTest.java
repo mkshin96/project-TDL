@@ -1,6 +1,7 @@
 package com.mugon.controller;
 
 import com.mugon.dto.UserDTO;
+import com.mugon.repository.ReplyRepository;
 import com.mugon.repository.ToDoListRepository;
 import com.mugon.repository.UserRepository;
 import com.mugon.service.UserService;
@@ -25,15 +26,19 @@ public class CreateUserBeforeTest extends BaseControllerTest{
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    ToDoListRepository toDoListRepository;
+
+    @Autowired
+    ReplyRepository replyRepository;
+
     UserDetails userDetails;
 
     final String todolistUrl = "/toDoList";
 
-    @Autowired
-    ToDoListRepository toDoListRepository;
-
     @Before
     public void setUp() throws Exception {
+        replyRepository.deleteAll();
         toDoListRepository.deleteAll();
         userRepository.deleteAll();
         //GIVEN

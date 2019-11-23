@@ -33,8 +33,8 @@ public class ReplyController {
     }
 
     @PutMapping("/{idx}")
-    public ResponseEntity<?> putReply(@PathVariable("idx")Long idx, @RequestBody String modified){
-        return replyService.putReply(idx, modified);
+    public ResponseEntity<?> putReply(@PathVariable("idx")Long idx, @Valid @RequestBody ReplyDto replyDto, Errors errors){
+        return replyService.putReply(idx, replyDto.getContent(), errors);
     }
 
     @DeleteMapping("/{idx}")
