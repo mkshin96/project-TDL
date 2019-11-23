@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class ToDoListController {
 
-    final
-    ToDoListService toDoListService;
+    private final ToDoListService toDoListService;
 
     private final UserRepository userRepository;
 

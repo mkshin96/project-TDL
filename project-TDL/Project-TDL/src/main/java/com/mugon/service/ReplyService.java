@@ -5,6 +5,7 @@ import com.mugon.domain.ToDoList;
 import com.mugon.dto.ReplyDto;
 import com.mugon.repository.ReplyRepository;
 import com.mugon.repository.ToDoListRepository;
+import com.mugon.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -34,16 +34,9 @@ public class ReplyService {
         this.toDoListRepository = toDoListRepository;
     }
 
-    public List<Reply> findReplyByToDoList(ToDoList toDoList) {
-
-        System.out.println("service :" +toDoList);
-
-        return replyRepository.findAllByToDoListOrderByIdx(toDoList);
-
-    }
-
-    public void checkTodo(Long idx){
+    public ResponseEntity<?> checkTodo(Long idx){
         this.toDoList = toDoListRepository.findToDoListByIdx(idx);
+        return new ResponseEntity<>("{}", HttpStatus.CREATED);
     }
 
     public ResponseEntity<?> postReply(ReplyDto replyDto, Errors errors) {

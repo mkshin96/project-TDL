@@ -160,7 +160,7 @@ $('.replyRegister').click(function () {
     replyCount++;
     divCount++;
     localStorage.setItem('divCount', divCount);
-    console.log(localStorage.getItem('divCount'))
+    console.log(localStorage.getItem('divCount'));
 
     var reply_id2 = $(this).val();
 

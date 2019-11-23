@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class UserControllerTest extends BaseControllerTests{
+public class UserControllerTest extends BaseControllerTest {
 
     @Autowired
     UserRepository userRepository;
