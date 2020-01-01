@@ -3,6 +3,7 @@ package com.mugon.service;
 import com.mugon.domain.User;
 import com.mugon.dto.UserDTO;
 import com.mugon.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,14 +23,12 @@ import java.util.List;
 
 
 @Service
+@RequiredArgsConstructor
 public class UserService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
+    private final PasswordEncoder passwordEncoder;
 
     public void saveUser(UserDTO postUserDTO){
         postUserDTO.setPassword(passwordEncoder.encode(postUserDTO.getPassword()));

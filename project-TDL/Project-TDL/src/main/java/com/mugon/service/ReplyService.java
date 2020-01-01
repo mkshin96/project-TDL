@@ -6,6 +6,7 @@ import com.mugon.dto.ReplyDto;
 import com.mugon.repository.ReplyRepository;
 import com.mugon.repository.ToDoListRepository;
 import com.mugon.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ReplyService {
 
     private final ReplyRepository replyRepository;
@@ -26,13 +28,6 @@ public class ReplyService {
     private final ModelMapper modelMapper;
 
     private ToDoList toDoList;
-
-    @Autowired
-    public ReplyService(ModelMapper modelMapper, ReplyRepository replyRepository, ToDoListRepository toDoListRepository) {
-        this.modelMapper = modelMapper;
-        this.replyRepository = replyRepository;
-        this.toDoListRepository = toDoListRepository;
-    }
 
     public ResponseEntity<?> checkTodo(Long idx){
         this.toDoList = toDoListRepository.findToDoListByIdx(idx);

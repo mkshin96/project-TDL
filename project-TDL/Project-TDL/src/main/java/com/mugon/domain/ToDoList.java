@@ -45,7 +45,7 @@ public class ToDoList implements Serializable {
 
     public void updateStatus(boolean status) {
         this.status = !status;
-        this.completedDate = status ? null : LocalDateTime.now();
+        this.completedDate = status ? LocalDateTime.now() : null;
     }
 
     public void addUser(User user) {

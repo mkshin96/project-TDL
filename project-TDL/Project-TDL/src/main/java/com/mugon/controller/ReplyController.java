@@ -3,6 +3,7 @@ package com.mugon.controller;
 import com.mugon.domain.ToDoList;
 import com.mugon.dto.ReplyDto;
 import com.mugon.service.ReplyService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,14 +14,11 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/reply")
+@RequiredArgsConstructor
 @Slf4j
 public class ReplyController {
 
     private final ReplyService replyService;
-
-    public ReplyController(ReplyService replyService) {
-        this.replyService = replyService;
-    }
 
     @PostMapping("/checkIdx")
     public ResponseEntity<?> checkIdx(@RequestBody ToDoList toDoList){

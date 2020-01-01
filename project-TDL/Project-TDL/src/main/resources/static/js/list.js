@@ -1,9 +1,9 @@
 $('.reply').hide();
 var replyCount = 0;
 var divCount = 0;
-var nullCheck = localStorage.getItem('divCount');
-
-console.log(nullCheck);
+var tdlUri = "http://localhost:8080/todo/";
+var replyUri = "http://localhost:8080/reply/";
+var jsonType = "application/json";
 
 $('#register').click(function () {
     var description = '#description';
@@ -18,10 +18,10 @@ $('#register').click(function () {
     });
 
     $.ajax({
-        url: "http://localhost:8080/toDoList",
+        url: tdlUri,
         type: "POST",
         data: jsonData,
-        contentType: "application/json",
+        contentType: jsonType,
         dataType: "json",
         success: function () {
             alert('등록 성공!');
@@ -38,11 +38,11 @@ $('.delete').click(function () {
     var delete_id = $(this).val();
 
     $.ajax({
-        url: "http://localhost:8080/toDoList/" + delete_id,
+        url: tdlUri + delete_id,
         type: "DELETE",
-        contentType: "application/json",
+        contentType: jsonType,
         success: function () {
-            location.href = '/toDoList/list';
+            location.href = '/todo/list';
         },
         error: function () {
             alert('삭제 실패!');
@@ -50,16 +50,15 @@ $('.delete').click(function () {
     });
 });
 
-
 $('.replyDelete').click(function () {
     var delete_id = $(this).val();
 
     $.ajax({
-        url: "http://localhost:8080/reply/" + delete_id,
+        url: replyUri + delete_id,
         type: "DELETE",
-        contentType: "application/json",
+        contentType: jsonType,
         success: function () {
-            location.href = '/toDoList/list';
+            location.href = '/todo/list';
         },
         error: function () {
             alert('삭제 실패!');
@@ -74,10 +73,10 @@ $(document).on("click",".update",function(){
     var update_id = $(this).val();
     console.log("update_id : " + update_id);
     $.ajax({
-        url: "http://localhost:8080/toDoList/" + update_id,
+        url: tdlUri + update_id,
         type: "PUT",
         data: jsonData,
-        contentType: "application/json",
+        contentType: jsonType,
         dataType: "json",
         success: function () {
             alert('수정 성공!');
@@ -97,10 +96,10 @@ $(document).on("click",".replyUpdate",function(){
     var update_id = $(this).val();
 
     $.ajax({
-        url: "http://localhost:8080/reply/" + update_id,
+        url: replyUri + update_id,
         type: "PUT",
         data: jsonData,
-        contentType: "application/json",
+        contentType: jsonType,
         dataType: "json",
         success: function () {
             alert('수정 성공!');
@@ -115,9 +114,9 @@ $('.complete').click(function () {
     var complete_id = $(this).val();
 
     $.ajax({
-        url: "http://localhost:8080/toDoList/status/" + complete_id,
+        url: tdlUri + "status/" + complete_id,
         type: "PUT",
-        contentType: "application/json",
+        contentType: jsonType,
         dataType: "json",
         success: function () {
             location.reload();
@@ -130,7 +129,6 @@ $('.complete').click(function () {
 
 
 $('.replyButton').click(function () {
-    console.log("reply버튼 누름");
     var reply_id = $(this).val();
     var reply_parent_id = $(this).parent().parent().parent().find('.reply');
     var reply_parent_id2 = $(this).parent().parent().parent().find('.please3');
@@ -142,10 +140,10 @@ $('.replyButton').click(function () {
     });
 
     $.ajax({
-        url: "http://localhost:8080/reply/checkIdx",
+        url: replyUri + "checkIdx",
         type: "POST",
         data: jsonData,
-        contentType: "application/json",
+        contentType: jsonType,
         dataType: "json",
         success: function () {
         },
@@ -166,16 +164,15 @@ $('.replyRegister').click(function () {
 
     var reply_text = $('.textBox input').eq(reply_id2 - 1).val();
 
-    console.log(reply_id2);
     var jsonData = JSON.stringify({
         content : reply_text
     });
 
     $.ajax({
-        url: "http://localhost:8080/reply",
+        url: replyUri,
         type: "POST",
         data: jsonData,
-        contentType: "application/json",
+        contentType: jsonType,
         dataType: "json",
 
         success: function (data) {
@@ -215,9 +212,9 @@ $('.replyRegister').click(function () {
                 $('.deleteContent' + deVal).remove();
 
                 $.ajax({
-                    url: "http://localhost:8080/reply/" + deVal,
+                    url: replyUri + deVal,
                     type: "DELETE",
-                    contentType: "application/json",
+                    contentType: jsonType,
                     dataType: "json",
                     success: function () {
                         alert('삭제 성공!');
@@ -247,18 +244,16 @@ $('.replyRegister').click(function () {
                 var modified = $(this).parent().parent().find('.updateContent2').text();
                 console.log(modified);
                 $.ajax({
-                    url: "http://localhost:8080/reply/" + deVal,
+                    url: replyUri + deVal,
                     type: "PUT",
-                    data: modified,
-                    contentType: "application/json",
+                    data: JSON.stringify({content : modified}),
+                    contentType: jsonType,
                     dataType: "json",
                     success: function () {
                         alert('수정 성공!');
-                        // location.reload();
-                        // location.href = '/toDoList/list';
                     },
                     error: function () {
-                        // alert('수정 실패!');
+                        alert("수정 실패!");
                     }
                 });
             };
@@ -292,9 +287,9 @@ $('.replyRegister').click(function () {
 
 $('#deleteAll').click(function () {
     $.ajax({
-        url: "http://localhost:8080/toDoList/deleteAll",
+        url: tdlUri + "deleteAll",
         type: "DELETE",
-        contentType: "application/json",
+        contentType: jsonType,
         success: function () {
             alert('전체삭제 성공!');
 

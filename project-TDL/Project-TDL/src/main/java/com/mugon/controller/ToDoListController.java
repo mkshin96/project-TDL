@@ -5,6 +5,7 @@ import com.mugon.dto.ToDoListDto;
 import com.mugon.repository.UserRepository;
 import com.mugon.service.ToDoListService;
 import com.mugon.service.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/toDoList")
+@RequestMapping("/todo")
+@RequiredArgsConstructor
 @Slf4j
 public class ToDoListController {
 
@@ -22,12 +24,6 @@ public class ToDoListController {
     private final UserRepository userRepository;
 
     private User user;
-
-    @Autowired
-    public ToDoListController(ToDoListService toDoListService, UserRepository userRepository) {
-        this.toDoListService = toDoListService;
-        this.userRepository = userRepository;
-    }
 
     @GetMapping("/list")
     public String list(Model model) {
@@ -62,7 +58,7 @@ public class ToDoListController {
 
     //tdlList 개별삭제
     @DeleteMapping("/{idx}")
-    public ResponseEntity<?> delete(@PathVariable("idx") Long idx){
+    public ResponseEntity<?> delete(@PathVariable Long idx){
         return toDoListService.deleteTdl(idx);
     }
 

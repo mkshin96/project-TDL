@@ -5,13 +5,10 @@ import com.mugon.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ToDoListRepository extends JpaRepository<ToDoList, Long> {
-    List<ToDoList> findAllByOrderByIdx();
     List<ToDoList> findAllByUserOrderByIdx(User user);
-    List<ToDoList> findByIdx(Long idx);
-    ToDoList findByUser(User user);
+    Optional<ToDoList> findByIdx(Long idx);
     ToDoList findToDoListByIdx(Long idx);
-
-
 }

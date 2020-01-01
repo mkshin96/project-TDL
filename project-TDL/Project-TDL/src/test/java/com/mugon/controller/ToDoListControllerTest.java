@@ -3,10 +3,7 @@ package com.mugon.controller;
 import com.mugon.commons.TestDescription;
 import com.mugon.domain.ToDoList;
 import com.mugon.dto.ToDoListDto;
-import com.mugon.service.ToDoListService;
 import org.junit.Test;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
 import java.util.Optional;
@@ -20,12 +17,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class ToDoListControllerTest extends CreateUserBeforeTest {
 
-    @Autowired
-    ModelMapper modelMapper;
-
-    @Autowired
-    ToDoListService toDoListService;
-
     @Test
     @TestDescription("todolist 성공적으로 저장")
     public void createToDo() throws Exception {
@@ -36,10 +27,10 @@ public class ToDoListControllerTest extends CreateUserBeforeTest {
         //WHEN
         mockMvc.perform(post(todolistUrl)
                 .with(user(userDetails))
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(objectMapper.writeValueAsString(toDoListDto)))
-        .andDo(print())
-        .andExpect(status().isCreated());
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(toDoListDto)))
+                .andDo(print())
+                .andExpect(status().isCreated());
 
         //THEN
         Optional<ToDoList> todo = toDoListRepository.findById(1L);
@@ -64,21 +55,21 @@ public class ToDoListControllerTest extends CreateUserBeforeTest {
                 .andDo(print())
                 .andExpect(status().isCreated());
 
+        assertThat(toDoListRepository.findById(1L)).isNotNull();
+
         //GIVEM
         toDoListDto.setDescription("수정한 해야 할 일1");
 
-        assertThat(toDoListRepository.findById(1L)).isNotNull();
-
         //WHEN
-        mockMvc.perform(put(todolistUrl, "1")
+        mockMvc.perform(put(todolistUrl + "/1")
                 .with(user(userDetails))
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(objectMapper.writeValueAsString(toDoListDto)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(toDoListDto)))
                 .andDo(print())
                 .andExpect(status().isOk());
 
         //THEN
-        Optional<ToDoList> updatedTodo = toDoListRepository.findById(1l);
+        Optional<ToDoList> updatedTodo = toDoListRepository.findById(1L);
         assertThat(updatedTodo.get().getDescription()).isEqualTo("수정한 해야 할 일1");
     }
 

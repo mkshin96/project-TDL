@@ -1,12 +1,11 @@
 package com.mugon.service;
 
-import com.mugon.domain.Reply;
 import com.mugon.domain.ToDoList;
 import com.mugon.domain.User;
 import com.mugon.dto.ToDoListDto;
 import com.mugon.repository.ToDoListRepository;
 import com.mugon.repository.UserRepository;
-import lombok.ToString;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,23 +13,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ToDoListService {
 
-    @Autowired
-    ToDoListRepository toDoListRepository;
+    private final ToDoListRepository toDoListRepository;
 
-    @Autowired
-    UserRepository userRepository;
-
-    private User user;
-
-    @Autowired
-    ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
     //User가 자신의 tdlList만 보게하기 위한 기능 구현
     public List<ToDoList> findTdlListByUser(User user) {
@@ -59,10 +51,11 @@ public class ToDoListService {
     }
 
     public ResponseEntity<?> updateTdlStatus(Long idx) {
-        Optional<ToDoList> optionalToDoList = toDoListRepository.findById(idx);
+        Optional<ToDoList> optionalToDoList = toDoListRepository.findByIdx(idx);
         if (!optionalToDoList.isPresent()) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().build();
         }
+
         ToDoList updatedTDL = optionalToDoList.get();
         updatedTDL.updateStatus(updatedTDL.getStatus());
         toDoListRepository.save(updatedTDL);

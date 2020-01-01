@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @Slf4j
-public class UserController {
+public class LoginController {
 
     @GetMapping("/login")
     public String login() {
@@ -17,7 +17,7 @@ public class UserController {
     @PostMapping("/loginSuccess")
     public String loginSuccess() {
         log.info("로그인 진입");
-        return "redirect:/toDoList/list";
+        return "redirect:/todo/list";
     }
 
 }

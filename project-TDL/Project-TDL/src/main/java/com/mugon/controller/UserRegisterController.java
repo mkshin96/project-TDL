@@ -4,6 +4,7 @@ import com.mugon.domain.User;
 import com.mugon.dto.UserDTO;
 import com.mugon.repository.UserRepository;
 import com.mugon.service.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,18 +20,13 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/register")
+@RequiredArgsConstructor
 @Slf4j
-public class RegisterController {
+public class UserRegisterController {
 
     private final UserRepository userRepository;
 
     private final UserService userService;
-
-    @Autowired
-    public RegisterController(UserRepository userRepository, UserService userService) {
-        this.userRepository = userRepository;
-        this.userService = userService;
-    }
 
     @GetMapping
     public String register() {

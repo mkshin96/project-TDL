@@ -7,8 +7,6 @@ import com.mugon.repository.UserRepository;
 import com.mugon.service.UserService;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,7 +15,6 @@ import static org.springframework.security.test.web.servlet.response.SecurityMoc
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 public class CreateUserBeforeTest extends BaseControllerTest{
 
     @Autowired
@@ -34,7 +31,7 @@ public class CreateUserBeforeTest extends BaseControllerTest{
 
     UserDetails userDetails;
 
-    final String todolistUrl = "/toDoList";
+    final String todolistUrl = "/todo";
 
     @Before
     public void setUp() throws Exception {
